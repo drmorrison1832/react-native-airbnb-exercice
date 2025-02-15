@@ -5,5 +5,12 @@ export default StyleSheet.create({
     borderColor: "red",
     borderWidth: "1",
     borderStyle: "solid",
+    margin: 2,
+  },
+  blueBorder: {
+    borderColor: "blue",
+    borderWidth: "1",
+    borderStyle: "solid",
+    margin: 2,
   },
 });

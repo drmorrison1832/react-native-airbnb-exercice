@@ -1,10 +1,24 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  default: {
+  fullScreen: {
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    // borderColor: "blue",
+    // borderWidth: 1,
+  },
+  default: {
+    // flex: 1,
+    // backgroundColor: "#fff",
+    alignSelf: "stretch",
+    alignItems: "center",
+    justifyContent: "center",
+    // borderColor: "blue",
+    // borderWidth: 1,
   },
 });
+
+// borderColor: "blue",
+//     borderWidth: 1,

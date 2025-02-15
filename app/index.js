@@ -6,20 +6,20 @@ import styles from "../assets/styles/styles";
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.containers.default}>
+    <SafeAreaView style={[styles.containers.fullScreen]}>
       <Text style={styles.text.title}>Bienvenue sur Expo Router !</Text>
-
-      <Button
-        title="Sign In"
-        onPress={() => {
-          router.push("/user/sign-in");
-        }}
-      />
 
       <Button
         title="Sign Up"
         onPress={() => {
           router.push("/user/sign-up");
+        }}
+      />
+
+      <Button
+        title="Sign In"
+        onPress={() => {
+          router.push("/user/sign-in");
         }}
       />
 

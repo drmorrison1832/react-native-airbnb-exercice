@@ -1,10 +1,18 @@
 import { StyleSheet } from "react-native";
+import colors from "./colors";
 
 export default StyleSheet.create({
   default: {
     height: 44,
-    borderWidth: 1,
-    borderColor: "gray",
-    marginBottom: 10,
+    borderBottomWidth: 3,
+    borderColor: colors.lightRed,
+    // marginBottom: 10,
+    alignSelf: "stretch",
+  },
+  multiline: {
+    borderWidth: 3,
+    borderColor: colors.lightRed,
+    marginTop: 20,
+    alignSelf: "stretch",
   },
 });
