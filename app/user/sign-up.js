@@ -5,7 +5,7 @@ import globalStyle from "../../assets/styles/globalStyle";
 export default function SignUp() {
   return (
     <SafeAreaView>
-      <Text style={styles.text.title}>SingUp</Text>
+      <Text style={globalStyle.text.title}>SingUp</Text>
     </SafeAreaView>
   );
 }
