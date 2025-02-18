@@ -4,15 +4,16 @@ import colors from "./colors";
 export default StyleSheet.create({
   default: {
     height: 44,
-    borderBottomWidth: 3,
+    borderBottomWidth: 2,
     borderColor: colors.lightRed,
-    // marginBottom: 10,
     alignSelf: "stretch",
+    fontSize: 16,
   },
   multiline: {
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: colors.lightRed,
     marginTop: 20,
     alignSelf: "stretch",
+    fontSize: 16,
   },
 });

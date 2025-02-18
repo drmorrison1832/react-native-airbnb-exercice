@@ -1,16 +1,27 @@
-import { TouchableHighlight, Text, StyleSheet } from "react-native";
+import {
+  TouchableHighlight,
+  TouchableOpacity,
+  Pressable,
+  Text,
+  StyleSheet,
+} from "react-native";
 import colors from "../assets/styles/colors";
 
 export default function ({ text }) {
   return (
-    <TouchableHighlight
-      activeOpacity={1}
-      underlayColor={colors.lightRed}
-      onPress={() => alert("Welcome!")}
-      style={buttonStyle.container}
-    >
-      <Text style={buttonStyle.text}>{text}</Text>
-    </TouchableHighlight>
+    <>
+      {/* <Pressable>
+        <Text>Test</Text>
+      </Pressable> */}
+      <TouchableOpacity
+        activeOpacity={1}
+        underlayColor={colors.lightRed}
+        onPress={() => alert("Welcome!")}
+        style={buttonStyle.container}
+      >
+        <Text style={buttonStyle.text}>{text}</Text>
+      </TouchableOpacity>
+    </>
   );
 }
 

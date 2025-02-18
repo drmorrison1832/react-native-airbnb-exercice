@@ -12,14 +12,14 @@ export default function App() {
       <Button
         title="Sign Up"
         onPress={() => {
-          router.push("/user/sign-up");
+          router.push("/auth/sign-up");
         }}
       />
 
       <Button
         title="Sign In"
         onPress={() => {
-          router.push("/user/sign-in");
+          router.push("/auth/sign-in");
         }}
       />
 
