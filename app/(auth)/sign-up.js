@@ -71,11 +71,7 @@ export default function SignUp() {
 
         <View style={[styles.containers.default, { gap: 20 }]}>
           <DefaultButton text="Sign up" />
-
-          <NavText
-            screen="/auth/index"
-            text="Already have an account? Sign in"
-          />
+          <NavText screen="/index" text="Already have an account? Sign in" />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

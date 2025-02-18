@@ -1,6 +1,6 @@
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, View, Text } from "react-native";
 import { Link } from "expo-router";
-
+import { useContext } from "react";
 import { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -9,14 +9,18 @@ import {
   ScreenTitle,
   ShortTextInput,
   NavText,
+  DefaultButton,
 } from "../../components/Index";
 
-import DefaultButton from "../../components/DefaultButton";
 import styles from "../../assets/styles/styles";
+
+import { AuthContext } from "../_layout";
 
 export default function SignIn() {
   const { email, setEmail } = useState("");
   const { username, setUsername } = useState("");
+
+  const { isAuthentified, setIsAutenthified } = useContext(AuthContext);
 
   return (
     <SafeAreaView
@@ -44,6 +48,9 @@ export default function SignIn() {
         <View style={[styles.containers.default, { gap: 20, borderWidth: 0 }]}>
           <Logo />
           <ScreenTitle title="Sign in" />
+          <Text style={{ color: "red" }}>
+            isAuthentified vaut {isAuthentified ? "true" : "false"}
+          </Text>
         </View>
 
         <View style={[styles.containers.default, { gap: 20, borderWidth: 0 }]}>
