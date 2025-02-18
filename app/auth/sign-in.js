@@ -1,9 +1,9 @@
-import { SafeAreaView, View, Text, Button, Pressable } from "react-native";
-import { Link, router } from "expo-router";
+import { SafeAreaView, View, Text } from "react-native";
+import { Link } from "expo-router";
 import { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import { Logo, ScreenTitle, DefaultTextInput } from "../../components/Index";
+import { Logo, ScreenTitle, ShortTextInput } from "../../components/Index";
 
 import DefaultButton from "../../components/DefaultButton";
 import styles from "../../assets/styles/styles";
@@ -41,12 +41,12 @@ export default function SignIn() {
         </View>
 
         <View style={[styles.containers.default, { gap: 20, borderWidth: 0 }]}>
-          <DefaultTextInput
+          <ShortTextInput
             placeholder="email"
             state={email}
             setState={setEmail}
           />
-          <DefaultTextInput
+          <ShortTextInput
             placeholder="username"
             state={username}
             setState={setUsername}
@@ -59,13 +59,6 @@ export default function SignIn() {
           <Link href={"/auth/sign-up"}>
             <Text>No account? Sign up</Text>
           </Link>
-
-          <Button
-            title="Home"
-            onPress={() => {
-              router.navigate("/");
-            }}
-          />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

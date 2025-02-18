@@ -1,5 +1,6 @@
 import Logo from "./Logo";
 import ScreenTitle from "./ScreenTitle";
-import DefaultTextInput from "./DefaultTextInput";
+import ShortTextInput from "./ShortTextInput";
+import LongTextInput from "./LongTextInput";
 
-export { Logo, ScreenTitle, DefaultTextInput };
+export { Logo, ScreenTitle, ShortTextInput, LongTextInput };

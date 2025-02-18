@@ -1,11 +1,14 @@
-import { SafeAreaView, View, Text, Button, TextInput } from "react-native";
+import { SafeAreaView, View, Text, Button } from "react-native";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import { Logo, ScreenTitle, DefaultTextInput } from "../../components/Index";
-
-import Entypo from "@expo/vector-icons/Entypo";
+import {
+  Logo,
+  ScreenTitle,
+  ShortTextInput,
+  LongTextInput,
+} from "../../components/Index";
 
 import DefaultButton from "../../components/DefaultButton";
 
@@ -36,36 +39,28 @@ export default function SignUp() {
           <Logo />
           <ScreenTitle title="Sign up" />
         </View>
-        <DefaultTextInput
-          placeholder="email"
-          state={email}
-          setState={setEmail}
-        />
-        <DefaultTextInput
+        <ShortTextInput placeholder="email" state={email} setState={setEmail} />
+        <ShortTextInput
           placeholder="username"
           state={username}
           setState={setUsername}
         />
-        <TextInput
-          style={[styles.inputs.multiline, { height: 100 }]}
+
+        <LongTextInput
           placeholder="Describe yourself in a frew words..."
-          multiline
-          maxLength={250}
           value={description}
           onChangeText={setDescription}
         />
 
         <View style={[styles.containers.default, { gap: 20 }]}>
-          <DefaultTextInput
+          <ShortTextInput
             placeholder="password"
             state={password}
             setState={setPassword}
             secureTextEntry
           />
 
-          <Entypo name="eye" size={24} color="black" />
-          <Entypo name="eye-with-line" size={24} color="black" />
-          <DefaultTextInput
+          <ShortTextInput
             placeholder="confirm password"
             state={confirmPassword}
             setState={setConfirmPassword}
@@ -79,13 +74,6 @@ export default function SignUp() {
           <Link href={"/auth/sign-in"}>
             <Text> Already have an account? Sign in</Text>
           </Link>
-
-          <Button
-            title="Home"
-            onPress={() => {
-              router.navigate("/");
-            }}
-          />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
