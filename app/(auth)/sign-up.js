@@ -8,6 +8,7 @@ import {
   ScreenTitle,
   ShortTextInput,
   LongTextInput,
+  NavText,
 } from "../../components/Index";
 
 import DefaultButton from "../../components/DefaultButton";
@@ -71,9 +72,7 @@ export default function SignUp() {
         <View style={[styles.containers.default, { gap: 20 }]}>
           <DefaultButton text="Sign up" />
 
-          <Link href={"/auth/sign-in"}>
-            <Text> Already have an account? Sign in</Text>
-          </Link>
+          <NavText screen="/index" text="Already have an account? Sign in" />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

@@ -1,9 +1,15 @@
-import { SafeAreaView, View, Text } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { Link } from "expo-router";
+
 import { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import { Logo, ScreenTitle, ShortTextInput } from "../../components/Index";
+import {
+  Logo,
+  ScreenTitle,
+  ShortTextInput,
+  NavText,
+} from "../../components/Index";
 
 import DefaultButton from "../../components/DefaultButton";
 import styles from "../../assets/styles/styles";
@@ -56,9 +62,7 @@ export default function SignIn() {
         <View style={[styles.containers.default, { gap: 20, borderWidth: 0 }]}>
           <DefaultButton text="Sign in"></DefaultButton>
 
-          <Link href={"/auth/sign-up"}>
-            <Text>No account? Sign up</Text>
-          </Link>
+          <NavText screen="/sign-up" text="No account? Sign up" />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
