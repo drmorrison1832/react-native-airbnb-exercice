@@ -6,42 +6,31 @@ import {
   StyleSheet,
 } from "react-native";
 import colors from "../assets/styles/colors";
+import styles from "../assets/styles/styles";
 
-export default function ({ text }) {
+export default function ({ text, onPress, disabled }) {
   return (
     <>
-      {/* <Pressable>
-        <Text>Test</Text>
-      </Pressable> */}
-      <TouchableOpacity
+      <Pressable
         activeOpacity={1}
         underlayColor={colors.lightRed}
-        onPress={() => alert("Welcome!")}
-        style={buttonStyle.container}
+        onPress={onPress}
+        style={({ pressed }) => [
+          styles.buttons.defaultButton.container,
+          !disabled &&
+            pressed &&
+            styles.buttons.defaultButton.container.pressed,
+        ]}
       >
-        <Text style={buttonStyle.text}>{text}</Text>
-      </TouchableOpacity>
+        <Text
+          style={[
+            styles.buttons.defaultButton.text,
+            disabled && styles.buttons.defaultButton.text.disabled,
+          ]}
+        >
+          {text}
+        </Text>
+      </Pressable>
     </>
   );
 }
-
-const buttonStyle = StyleSheet.create({
-  container: {
-    minWidth: 200,
-    justifyContent: "center",
-    // minHeight: 50,
-    // borderColor: "blue",
-    // borderWidth: 1,
-    borderRadius: 30,
-  },
-  text: {
-    padding: 15,
-    borderColor: colors.mainRed,
-    borderWidth: 3,
-    borderRadius: 30,
-    fontSize: 20,
-    fontWeight: "semibold",
-    textAlign: "center",
-    color: colors.darkGrey,
-  },
-});
