@@ -15,8 +15,6 @@ export default function ShortTextInput({
 }) {
   const [showPassword, setShowpassword] = useState(!secureTextEntry);
 
-  // console.log(errorFields);
-
   return (
     <View
       style={[
@@ -34,7 +32,6 @@ export default function ShortTextInput({
           if (errorFields.indexOf(name) !== -1) {
             let newErrorFields = [...errorFields];
             newErrorFields.splice(errorFields.indexOf(name), 1);
-            // console.log(newErrorFields);
             setErrorFields(newErrorFields);
           }
         }}

@@ -18,10 +18,17 @@ import styles from "../../assets/styles/styles";
 import AuthContext from "../../context/AuthContext";
 
 export default function Register() {
-  const { username, setUsername, token, setToken, login, logout } =
-    useContext(AuthContext);
+  const {
+    currentUsername,
+    setCurrentUsername,
+    currentToken,
+    setCurrentToken,
+    login,
+    logout,
+  } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -60,7 +67,6 @@ export default function Register() {
 
     // Axios
     setIsLoading(true);
-    console.log("ok");
 
     const body = {
       email,
@@ -75,8 +81,8 @@ export default function Register() {
         body
       );
       console.log(response.data); // description, email, id , photo, rooms: [], token, username}
-      setUsername(response.data.username);
-      setToken(response.data.token);
+
+      login(response.data.username, response.data.token);
 
       setIsLoading(false);
       setErrorFields([]);

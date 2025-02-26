@@ -48,10 +48,7 @@ export default function Login() {
 
     // Axios request
 
-    // handleConnection({ setIsLoading, email, password });
-
     setIsLoading(true);
-    let user = null;
 
     const body = {
       email,
@@ -63,10 +60,10 @@ export default function Login() {
         "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/log_in",
         body
       );
-      // console.log(response.data);
-      setUsername(response.data.username);
-      setToken(response.data.token);
-      alert(`connected as ${response.data.username}`);
+
+      const { username, token } = response.data;
+      login(username, token);
+
       setIsLoading(false);
       setErrorFields([]);
       setErrorMessage("");
