@@ -1,15 +1,12 @@
 import { StatusBar } from "react-native";
 import { Stack, Slot, router } from "expo-router";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 
-import AuthContext from "../context/AuthContext";
+import AuthProvider from "../context/AuthProvider";
 
 export default function RootLayout() {
   const [currentUsername, setCurrentUsername] = useState("test username");
   const [currentToken, setCurrentToken] = useState("test token");
-
-  // const context = useContext(AuthContext);
-  // console.log("AuthContext as recived by _layout is:", context);
 
   function login(username, token) {
     console.log("logged in");
@@ -31,7 +28,7 @@ export default function RootLayout() {
   }, [currentToken]);
 
   return (
-    <AuthContext.Provider
+    <AuthProvider
       value={{
         currentUsername,
         setCurrentUsername,
@@ -43,6 +40,6 @@ export default function RootLayout() {
     >
       <StatusBar barStyle="dark-content" />
       <Slot screenOptions={{ headerShown: true }}></Slot>
-    </AuthContext.Provider>
+    </AuthProvider>
   );
 }
