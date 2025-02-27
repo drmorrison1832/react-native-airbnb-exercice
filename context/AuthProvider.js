@@ -1,4 +1,3 @@
-import { useState, useContext } from "react";
 import AuthContext from "./AuthContext";
 
 export default function AuthProvider({ children, value }) {
