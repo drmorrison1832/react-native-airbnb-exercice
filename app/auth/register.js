@@ -18,14 +18,7 @@ import styles from "../../assets/styles/styles";
 import AuthContext from "../../context/AuthContext";
 
 export default function Register() {
-  const {
-    currentUsername,
-    setCurrentUsername,
-    currentToken,
-    setCurrentToken,
-    login,
-    logout,
-  } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -80,9 +73,9 @@ export default function Register() {
         "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/sign_up",
         body
       );
-      console.log(response.data); // description, email, id , photo, rooms: [], token, username}
+      // console.log(response.data); // description, email, id , photo, rooms: [], token, username}
 
-      login(response.data.username, response.data.token);
+      login(response.data);
 
       setIsLoading(false);
       setErrorFields([]);

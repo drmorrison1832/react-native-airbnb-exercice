@@ -20,6 +20,8 @@ import styles from "../../assets/styles/styles";
 import AuthContext from "../../context/AuthContext";
 
 export default function Login() {
+  console.log("Rendering Login");
+
   const { username, setUsername, token, setToken, login, logout } =
     useContext(AuthContext);
 
@@ -61,8 +63,7 @@ export default function Login() {
         body
       );
 
-      const { username, token } = response.data;
-      login(username, token);
+      login(response.data);
 
       setIsLoading(false);
       setErrorFields([]);

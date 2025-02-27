@@ -1,39 +1,61 @@
 import { StatusBar } from "react-native";
-import { Stack, Slot, router } from "expo-router";
+import { Slot, router } from "expo-router";
 import { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import AuthProvider from "../context/AuthProvider";
 
 export default function RootLayout() {
-  const [currentUsername, setCurrentUsername] = useState("test username");
-  const [currentToken, setCurrentToken] = useState("test token");
+  console.log("Rendering RootLayout");
+  const [userInfo, setUserInfo] = useState({});
+  const [isConnected, setIsConnected] = useState(false);
 
-  function login(username, token) {
-    console.log("logged in");
-    setCurrentUsername(username);
-    setCurrentToken(token);
+  async function login(newUserInfo) {
+    console.log("login:", newUserInfo);
+    await AsyncStorage.setItem("storedUserInfo", JSON.stringify(newUserInfo));
+    setUserInfo(newUserInfo);
+    setIsConnected(true);
   }
 
-  function logout() {
-    console.log("logged out");
-    setCurrentUsername(null);
-    setCurrentToken(null);
+  async function logout() {
+    console.log("logout");
+    await AsyncStorage.removeItem("storedUserInfo");
+    setUserInfo(null);
+    setIsConnected(false);
   }
 
   useEffect(() => {
-    console.log("Current user is", currentUsername);
-    if (currentToken) {
+    async function getCurrentUserInfoFromAsyncStorage() {
+      console.log(getCurrentUserInfoFromAsyncStorage);
+      try {
+        const storedUserInfo = await AsyncStorage.getItem("storedUserInfo");
+        console.log("storedUserInfo is", storedUserInfo);
+        if (storedUserInfo) {
+          setUserInfo(JSON.parse(storedUserInfo));
+          setIsConnected(true);
+        }
+      } catch (error) {
+        console.log(error);
+        alert("Something went wrong");
+      }
+    }
+    getCurrentUserInfoFromAsyncStorage();
+  }, []);
+
+  useEffect(() => {
+    console.log("isConnected?");
+    if (isConnected) {
       router.replace("/main");
-    } else router.replace("/auth");
-  }, [currentToken]);
+    } else {
+      router.replace("/auth");
+    }
+  }, [isConnected]);
 
   return (
     <AuthProvider
       value={{
-        currentUsername,
-        setCurrentUsername,
-        currentToken,
-        setCurrentToken,
+        isConnected,
+        userInfo,
         login,
         logout,
       }}

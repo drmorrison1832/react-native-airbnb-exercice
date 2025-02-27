@@ -1,16 +1,29 @@
 import { Text, View } from "react-native";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
+import { router } from "expo-router";
 
 import styles from "../../assets/styles/styles";
 import { DefaultButton } from "../../components/Index";
 
 export default function Profile() {
-  const { logout } = useContext(AuthContext);
+  console.log("Rendering Profile");
+  const { userInfo, logout, isConnected } = useContext(AuthContext);
 
-  return (
-    <View style={[styles.containers.fullScreen]}>
-      <DefaultButton text="Logout" onPress={logout}></DefaultButton>
-    </View>
-  );
+  if (isConnected) {
+    return (
+      <View style={[styles.containers.fullScreen]}>
+        <View stylme={[styles.containers.default]}>
+          <Text>{userInfo.username}</Text>
+        </View>
+        <View stylme={[styles.containers.default]}>
+          <Text>« {userInfo.description} »</Text>
+        </View>
+        <View stylme={[styles.containers.default]}>
+          <Text>{userInfo.email}</Text>
+        </View>
+        <DefaultButton text="Logout" onPress={logout}></DefaultButton>
+      </View>
+    );
+  }
 }
