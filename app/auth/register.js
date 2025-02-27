@@ -73,7 +73,6 @@ export default function Register() {
         "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/sign_up",
         body
       );
-      // console.log(response.data); // description, email, id , photo, rooms: [], token, username}
 
       login(response.data);
 

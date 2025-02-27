@@ -22,8 +22,7 @@ import AuthContext from "../../context/AuthContext";
 export default function Login() {
   console.log("Rendering Login");
 
-  const { username, setUsername, token, setToken, login, logout } =
-    useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -69,7 +68,7 @@ export default function Login() {
       setErrorFields([]);
       setErrorMessage("");
     } catch (error) {
-      console.error(error);
+      console.error(error.message);
       switch (error?.status) {
         case 400:
           setErrorFields(["email", "password"]);
