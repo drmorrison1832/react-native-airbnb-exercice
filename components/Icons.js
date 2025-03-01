@@ -1,9 +1,13 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { Text } from "react-native";
 
 export default {
   Airbnb,
+  CaretUp,
+  CaretDown,
   MapMarker,
   StarRateFull,
   StarRateHalf,
@@ -41,6 +45,30 @@ function Airbnb(props) {
       size={sizeIndex(props?.size)}
       color={props.color}
     />
+  );
+}
+
+function CaretDown(props) {
+  return (
+    // <Text>
+    <AntDesign
+      name="caretdown"
+      size={sizeIndex(props?.size)}
+      color={props.color}
+    />
+    // </Text>
+  );
+}
+
+function CaretUp(props) {
+  return (
+    // <Text>
+    <AntDesign
+      name="caretup"
+      size={sizeIndex(props?.size)}
+      color={props.color}
+    />
+    // </Text>
   );
 }
 

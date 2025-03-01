@@ -14,9 +14,14 @@ import { router } from "expo-router";
 
 import axios from "axios";
 
-import { RoomHeader, RoomShowcasePicture } from "../../../components/Index";
+import {
+  RoomHeader,
+  RoomShowcasePicture,
+  Icons,
+} from "../../../components/Index";
 
 import styles from "../../../assets/styles/styles";
+import colors from "../../../assets/styles/colors";
 
 export default function Room() {
   console.log("Rendering Home");
@@ -96,6 +101,14 @@ export default function Room() {
               numberOfLines={descriptionIsCollapsed ? "3" : null}
             >
               {roomData.description}
+            </Text>
+            <Text style={styles.text.showMoreText}>
+              Show more{" "}
+              {descriptionIsCollapsed ? (
+                <Icons.CaretDown size={17} color={colors.darkGrey} />
+              ) : (
+                <Icons.CaretUp size={17} color={colors.darkGrey} />
+              )}
             </Text>
           </Pressable>
         </View>
