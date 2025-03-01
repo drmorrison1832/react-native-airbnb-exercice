@@ -1,26 +1,28 @@
 import { Tabs } from "expo-router";
 
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-
+import Icons from "../../components/Icons";
 import colors from "../../assets/styles/colors";
 
 export default function MainLayout() {
-  // useEffect(() => {}, []);
+  console.log("Rendering MainLayout");
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: colors.mainRed,
-        headerShown: false,
+        headerShown: true,
+        headerTintColor: colors.mainRed,
+        headerTitle: (props) => {
+          return <Icons.Airbnb size="headerTitle" color={props.tintColor} />;
+        },
       }}
     >
       <Tabs.Screen
         name="home"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => {
-            return <FontAwesome6 name="airbnb" size={24} color={color} />;
+          tabBarIcon: (props) => {
+            return <Icons.Airbnb size="tabBarIcon" color={props.color} />;
           },
         }}
       ></Tabs.Screen>
@@ -28,8 +30,8 @@ export default function MainLayout() {
         name="map"
         options={{
           title: "Arround me",
-          tabBarIcon: ({ color }) => {
-            return <FontAwesome size={24} name="map-marker" color={color} />;
+          tabBarIcon: (props) => {
+            return <Icons.MapMarker size="tabBarIcon" color={props.color} />;
           },
         }}
       ></Tabs.Screen>
@@ -37,8 +39,8 @@ export default function MainLayout() {
         name="profile"
         options={{
           title: "My account",
-          tabBarIcon: ({ color }) => {
-            return <FontAwesome size={24} name="user" color={color} />;
+          tabBarIcon: (props) => {
+            return <Icons.User size="tabBarIcon" color={props.color} />;
           },
         }}
       ></Tabs.Screen>

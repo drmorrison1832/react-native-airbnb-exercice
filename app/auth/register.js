@@ -1,11 +1,10 @@
 import { SafeAreaView, View, Text, Button } from "react-native";
-import { Link, router } from "expo-router";
 import { useState, useContext } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import axios from "axios";
 
 import {
-  Logo,
+  Icons,
   ScreenTitle,
   ShortTextInput,
   LongTextInput,
@@ -16,6 +15,7 @@ import {
 import styles from "../../assets/styles/styles";
 
 import AuthContext from "../../context/AuthContext";
+import colors from "../../assets/styles/colors";
 
 export default function Register() {
   const { login } = useContext(AuthContext);
@@ -111,7 +111,7 @@ export default function Register() {
         ]}
       >
         <View style={[styles.containers.default, { gap: 20 }]}>
-          <Logo />
+          <Icons.Airbnb size="large" color={colors.mainRed} />
           <ScreenTitle title="Register" />
         </View>
         <ShortTextInput

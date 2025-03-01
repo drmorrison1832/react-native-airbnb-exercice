@@ -1,5 +1,5 @@
 import { SafeAreaView, View, Text } from "react-native";
-import { Link } from "expo-router";
+
 import { useState, useContext } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ActivityIndicator } from "react-native";
@@ -8,12 +8,14 @@ import { ActivityIndicator } from "react-native";
 import axios from "axios";
 
 import {
-  Logo,
+  Icons,
   ScreenTitle,
   ShortTextInput,
   NavText,
   DefaultButton,
 } from "../../components/Index";
+
+import colors from "../../assets/styles/colors";
 
 import styles from "../../assets/styles/styles";
 
@@ -101,7 +103,7 @@ export default function Login() {
         ]}
       >
         <View style={[styles.containers.default, { gap: 20, borderWidth: 0 }]}>
-          <Logo />
+          <Icons.Airbnb size="large" color={colors.mainRed} />
           <ScreenTitle title="Login" />
         </View>
 
