@@ -33,6 +33,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit() {
+    console.log("handleSubmit...");
     let newErrorFields = [];
     setErrorMessage("");
 
@@ -48,8 +49,6 @@ export default function Login() {
           return;
         }
     }
-
-    // Axios request
 
     setIsLoading(true);
 

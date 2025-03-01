@@ -20,12 +20,14 @@ export default StyleSheet.create({
   searchResults: { roomTitle: { fontSize: 20 } },
   errorMessage: { alignSelf: "center", color: "red" },
 
-  ratingStars: {},
-
   numberOfReviews: {
     fontSize: 15,
     color: colors.lightGrey2,
     // borderColor: "red",
     // borderWidth: 1,
   },
+
+  //ROOM
+
+  descriptionText: { fontSize: 16, color: colors.lightGrey1 },
 });

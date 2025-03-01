@@ -30,6 +30,7 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit() {
+    console.log("handleSubmit...");
     let newErrorFields = [];
     setErrorMessage("");
 

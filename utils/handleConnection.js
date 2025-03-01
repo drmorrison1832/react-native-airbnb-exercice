@@ -1,39 +1,48 @@
 import axios from "axios";
 
-export default async function handleConnection({
-  setIsLoading,
-  email,
-  password,
-}) {
+export default async function handleConnection() {
   console.log("handleConnection...");
+
+  let newErrorFields = [];
+  setErrorMessage("");
+  console.log("ok");
+
+  switch (true) {
+    case !email:
+      newErrorFields.push("email");
+    case !password:
+      newErrorFields.push("password");
+    default:
+      if (newErrorFields.length > 0) {
+        setErrorFields(newErrorFields);
+        setErrorMessage("Please fill all fields");
+        return;
+      }
+  }
+
   setIsLoading(true);
-  let user = null;
 
   const body = {
     email,
     password,
   };
 
-  // console.log("ICI");
   try {
-    console.log("try...");
     let response = await axios.post(
       "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/log_in",
       body
     );
-    console.log(response.data);
-    setUsername(response.data.username);
-    setToken(response.data.token);
-    alert(`connected as ${response.data.username}`);
+
+    login(response.data);
+
     setIsLoading(false);
     setErrorFields([]);
     setErrorMessage("");
   } catch (error) {
-    console.log("catch...");
-    console.error(error);
+    console.error(error.message);
     switch (error?.status) {
       case 400:
-        setErrorFields([]);
+        setErrorFields(["email", "password"]);
         setErrorMessage("Wrong email or password");
         break;
       default:
@@ -42,7 +51,6 @@ export default async function handleConnection({
         break;
     }
 
-    console.log("end...");
     setIsLoading(false);
     return;
   }

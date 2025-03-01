@@ -11,6 +11,7 @@ export default StyleSheet.create({
     // borderColor: "blue",
     // borderWidth: 1,
   },
+
   default: {
     // flex: 1,
     // backgroundColor: "#fff",
@@ -18,33 +19,55 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
   inLineDefault: {
     flexDirection: "row",
-    alignItems: "center",
-    // borderColor: "blue",
+    // alignItems: "center",
+    // justifyContent: "space-between",
+    borderColor: "pink",
+    borderWidth: 1,
+    overflow: "hidden",
+  },
+
+  // ROOMS FLAT LIST
+
+  flatList: { width: "100%", paddingHorizontal: 20, paddingTop: 20 },
+
+  flatListRoomContainer: {
+    // borderColor: "red",
     // borderWidth: 1,
   },
 
-  priceBox: { width: 100, position: "absolute", bottom: 10 },
+  priceContainer: {
+    width: 100,
+    position: "absolute",
+    bottom: 10,
+  },
 
-  flatList: { width: "100%", paddingHorizontal: 20 },
-  flatListRoomContainer: {},
+  flatListDetailsContainer: {
+    marginVertical: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+
+    overflow: "hidden",
+  },
 
   flatListRoomTextContainer: {
-    flexGrow: 1,
-    width: 1,
+    flexGrow: 0,
+    flexShrink: 1,
   },
 
-  searchResultsRoomRateBox: {
-    flexGrow: 1,
+  flatListRoomRateContainer: {
     flexDirection: "row",
   },
+
   separator: {
-    // height: 0,
     borderColor: colors.lightGrey2,
     borderWidth: 1,
     marginVertical: 15,
   },
+
+  // ROOM
 
   shortTextInputContainer: {
     alignSelf: "stretch",
@@ -64,6 +87,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     height: 100,
   },
+
   errorInputContainer: { backgroundColor: "mistyrose" },
 });
 
