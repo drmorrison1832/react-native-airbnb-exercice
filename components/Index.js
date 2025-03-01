@@ -8,6 +8,8 @@ import Rating from "./Rating";
 import PriceBox from "./PriceBox";
 import RoomHeader from "./RoomHeader";
 import RoomShowcasePicture from "./RoomShowcasePicture";
+import RoomDescription from "./RoomDescription";
+import RoomMap from "./RoomMap";
 
 export {
   Icons,
@@ -20,4 +22,6 @@ export {
   PriceBox,
   RoomHeader,
   RoomShowcasePicture,
+  RoomDescription,
+  RoomMap,
 };

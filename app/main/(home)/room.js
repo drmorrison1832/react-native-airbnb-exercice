@@ -10,14 +10,14 @@ import {
 import { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { router } from "expo-router";
 
 import axios from "axios";
 
 import {
   RoomHeader,
   RoomShowcasePicture,
-  Icons,
+  RoomDescription,
+  RoomMap,
 } from "../../../components/Index";
 
 import styles from "../../../assets/styles/styles";
@@ -27,8 +27,6 @@ export default function Room() {
   console.log("Rendering Home");
 
   const { roomID } = useLocalSearchParams();
-
-  console.log(roomID);
 
   const [roomData, setRoomData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -74,8 +72,6 @@ export default function Room() {
     );
   }
 
-  console.log(Object.keys(roomData));
-
   return (
     <SafeAreaView>
       <ScrollView style={{ height: "100%" }}>
@@ -91,27 +87,13 @@ export default function Room() {
             reviews={roomData.reviews}
             photoURI={roomData.user.account.photo.url}
           />
-          <Pressable
-            onPress={() => {
-              setDescriptionIsCollapsed((prev) => !prev);
-            }}
-          >
-            <Text
-              style={styles.text.descriptionText}
-              numberOfLines={descriptionIsCollapsed ? "3" : null}
-            >
-              {roomData.description}
-            </Text>
-            <Text style={styles.text.showMoreText}>
-              Show more{" "}
-              {descriptionIsCollapsed ? (
-                <Icons.CaretDown size={17} color={colors.darkGrey} />
-              ) : (
-                <Icons.CaretUp size={17} color={colors.darkGrey} />
-              )}
-            </Text>
-          </Pressable>
+          <RoomDescription description={roomData.description} />
         </View>
+
+        <RoomMap
+          latitude={roomData.location[1]}
+          longitude={roomData.location[0]}
+        />
       </ScrollView>
     </SafeAreaView>
   );

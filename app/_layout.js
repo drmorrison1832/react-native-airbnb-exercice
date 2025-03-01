@@ -26,10 +26,9 @@ export default function RootLayout() {
 
   useEffect(() => {
     async function getCurrentUserInfoFromAsyncStorage() {
-      console.log(getCurrentUserInfoFromAsyncStorage);
       try {
         const storedUserInfo = await AsyncStorage.getItem("storedUserInfo");
-        console.log("storedUserInfo is", storedUserInfo);
+        // console.log("storedUserInfo is", storedUserInfo);
         if (storedUserInfo) {
           setUserInfo(JSON.parse(storedUserInfo));
           setIsConnected(true);
@@ -43,7 +42,7 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    console.log("isConnected?");
+    // console.log("isConnected?");
     if (isConnected) {
       router.replace("/main");
     } else {
