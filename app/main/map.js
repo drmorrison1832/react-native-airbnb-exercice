@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, Pressable } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import { router } from "expo-router";
 
 import axios from "axios";
 
@@ -13,12 +14,14 @@ export default function ArroundMe() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(true);
 
+  const latitude = 48.866667;
+  const longitude = 2.3333;
+
   useEffect(() => {
     setError(null);
     async function retrieveSourroundingRooms() {
       console.log("Retrieving sourrounding rooms data...");
-      const latitude = 48.8564449;
-      const longitude = 2.4002913;
+
       const query = `?latitude=${latitude}&longitude=${longitude}`;
       const URL =
         "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms/around" +
@@ -56,35 +59,43 @@ export default function ArroundMe() {
     <MapView
       style={{ flex: 1 }}
       initialRegion={{
-        latitude: 48.856614,
-        longitude: 2.3522219,
-        latitudeDelta: 0.2,
-        longitudeDelta: 0.2,
+        latitude: latitude,
+        longitude: longitude,
+        latitudeDelta: 0.3,
+        longitudeDelta: 0.3,
       }}
       showsUserLocation={true}
     >
-      <Marker
-        coordinate={{
-          latitude: 2.3981123,
-          longitude: 48.8613664,
-        }}
-        title="Test"
-        description="Et sa description"
-      />
-
-      {/* {sourroundingRooms.map((room) => {
+      {sourroundingRooms.map((room) => {
         return (
           <Marker
             key={room._id}
             coordinate={{
-              latitude: room.location[0],
-              longitude: room.location[1],
+              longitude: room.location[0],
+              latitude: room.location[1],
             }}
             title={room.title}
             description={room.description}
-          />
+            // image={{ URI: room.photos[0].url }}
+            onPress={() => {
+              router.navigate({
+                pathname: "./room",
+                params: { roomID: room._id },
+              });
+            }}
+          >
+            {/* <Pressable
+            ></Pressable> */}
+            {/* <Image
+              source={{
+                uri: room.photos[0].url,
+                }}
+                style={{ height: 100, width: 100, borderRadius: 50 }}
+                resizeMode="contain"
+                /> */}
+          </Marker>
         );
-      })} */}
+      })}
     </MapView>
   );
 }
