@@ -5,7 +5,7 @@ import { router } from "expo-router";
 
 import axios from "axios";
 
-import styles from "../../assets/styles/styles";
+import styles from "../../../assets/styles/styles";
 
 export default function ArroundMe() {
   console.log("Rendering ArroundMe");
@@ -79,7 +79,7 @@ export default function ArroundMe() {
             // image={{ URI: room.photos[0].url }}
             onPress={() => {
               router.navigate({
-                pathname: "./room",
+                pathname: "./room-from-map",
                 params: { roomID: room._id },
               });
             }}

@@ -17,7 +17,8 @@ export default function MainLayout() {
         headerShown: true,
         headerTintColor: colors.mainRed,
         headerLeft: () => {
-          return currentScreen === "/main/room" ? (
+          return currentScreen === "/main/room" ||
+            currentScreen === "/main/room-from-map" ? (
             <Pressable
               onPress={() => {
                 router.back();
@@ -43,7 +44,7 @@ export default function MainLayout() {
         }}
       ></Tabs.Screen>
       <Tabs.Screen
-        name="map"
+        name="(map)"
         options={{
           title: "Arround me",
           tabBarIcon: (props) => {
