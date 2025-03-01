@@ -15,6 +15,7 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingVertical: 12,
     paddingHorizontal: 10,
+    opacity: 0.8,
   },
 
   searchResults: { roomTitle: { fontSize: 20 } },

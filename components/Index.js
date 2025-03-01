@@ -10,6 +10,8 @@ import RoomHeader from "./RoomHeader";
 import RoomShowcasePicture from "./RoomShowcasePicture";
 import RoomDescription from "./RoomDescription";
 import RoomMap from "./RoomMap";
+import RoomPicturesSwiper from "./RoomPicturesSwiper";
+import ShowRoom from "./ShowRoom";
 
 export {
   Icons,
@@ -24,4 +26,6 @@ export {
   RoomShowcasePicture,
   RoomDescription,
   RoomMap,
+  RoomPicturesSwiper,
+  ShowRoom,
 };

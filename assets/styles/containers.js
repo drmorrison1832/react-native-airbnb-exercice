@@ -43,19 +43,22 @@ export default StyleSheet.create({
     width: 100,
     position: "absolute",
     bottom: 10,
+    zIndex: 2,
   },
 
   flatListDetailsContainer: {
     marginVertical: 10,
     flexDirection: "row",
     justifyContent: "space-between",
-
+    gap: 10,
     overflow: "hidden",
   },
 
   flatListRoomTextContainer: {
     flexGrow: 0,
     flexShrink: 1,
+    // borderWidth: 2,
+    justifyContent: "space-evenly",
   },
 
   flatListRoomRateContainer: {
@@ -65,7 +68,7 @@ export default StyleSheet.create({
   separator: {
     borderColor: colors.lightGrey2,
     borderWidth: 1,
-    marginVertical: 15,
+    marginVertical: 20,
   },
 
   // ROOM

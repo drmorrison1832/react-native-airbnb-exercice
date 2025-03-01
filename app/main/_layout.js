@@ -25,7 +25,7 @@ export default function MainLayout() {
               }}
               style={{ marginLeft: "5" }}
             >
-              <Icons.CaretLeft size={25} color={colors.lightRed} />
+              <Icons.CaretLeft size={25} color={colors.darkGrey} />
             </Pressable>
           ) : null;
         },

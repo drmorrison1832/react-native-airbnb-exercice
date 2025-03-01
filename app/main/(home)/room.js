@@ -1,10 +1,10 @@
 import {
-  SafeAreaView,
-  FlatList,
   View,
   Text,
-  Pressable,
-  ScrollView,
+  // SafeAreaView,
+  // FlatList,
+  // Pressable,
+  // ScrollView,
 } from "react-native";
 import { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
@@ -13,10 +13,12 @@ import { useLocalSearchParams } from "expo-router";
 import axios from "axios";
 
 import {
-  RoomHeader,
-  RoomShowcasePicture,
-  RoomDescription,
-  RoomMap,
+  // RoomHeader,
+  // RoomShowcasePicture,
+  // RoomDescription,
+  // RoomMap,
+  // RoomPicturesSwiper,
+  ShowRoom,
 } from "../../../components/Index";
 
 import styles from "../../../assets/styles/styles";
@@ -30,8 +32,6 @@ export default function Room() {
   const [roomData, setRoomData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(true);
-
-  const [descriptionIsCollapsed, setDescriptionIsCollapsed] = useState(true);
 
   useEffect(() => {
     setError(null);
@@ -72,28 +72,30 @@ export default function Room() {
   }
 
   return (
-    <SafeAreaView>
-      <ScrollView style={{ height: "100%" }}>
-        <RoomShowcasePicture
-          URI={roomData.photos[0].url}
-          height="300"
-          price={roomData.price}
-        />
-        <View style={{ padding: 20 }}>
-          <RoomHeader
-            title={roomData.title}
-            ratingValue={roomData.ratingValue}
-            reviews={roomData.reviews}
-            photoURI={roomData.user.account.photo.url}
-          />
-          <RoomDescription description={roomData.description} />
-        </View>
+    <ShowRoom roomData={roomData} />
 
-        <RoomMap
-          latitude={roomData.location[1]}
-          longitude={roomData.location[0]}
-        />
-      </ScrollView>
-    </SafeAreaView>
+    // <SafeAreaView>
+    //   <ScrollView style={{ height: "100%" }}>
+    //     <RoomPicturesSwiper
+    //       data={roomData.photos}
+    //       height="300"
+    //       price={roomData.price}
+    //     />
+    //     <View style={{ padding: 20 }}>
+    //       <RoomHeader
+    //         title={roomData.title}
+    //         ratingValue={roomData.ratingValue}
+    //         reviews={roomData.reviews}
+    //         photoURI={roomData.user.account.photo.url}
+    //       />
+    //       <RoomDescription description={roomData.description} />
+    //     </View>
+
+    //     <RoomMap
+    //       latitude={roomData.location[1]}
+    //       longitude={roomData.location[0]}
+    //     />
+    //   </ScrollView>
+    // </SafeAreaView>
   );
 }
