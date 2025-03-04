@@ -6,6 +6,7 @@ import { Pressable } from "react-native";
 
 export default {
   Airbnb,
+  Back,
   CaretUp,
   CaretDown,
   CaretLeft,
@@ -48,6 +49,12 @@ function Airbnb(props) {
       size={sizeIndex(props?.size)}
       color={props.color}
     />
+  );
+}
+
+function Back(props) {
+  return (
+    <AntDesign name="back" size={sizeIndex(props?.size)} color={props.color} />
   );
 }
 

@@ -12,8 +12,39 @@ export default function ShortTextInput({
   name,
   errorFields,
   setErrorFields,
+  returnKeyType,
+  refs,
+  refIndex,
+  onSubmitEditing,
 }) {
   const [showPassword, setShowpassword] = useState(!secureTextEntry);
+
+  function handleOnSubmitEditing() {
+    onSubmitEditing &&
+      typeof onSubmitEditing === "function" &&
+      onSubmitEditing();
+
+    // I suppose onSubmitEditing is either a function or a string:
+    switch (onSubmitEditing) {
+      case "blur":
+        // Just closes (blurs) keyboard
+        null;
+        break;
+      case "next":
+        // If there's still a ref, focus on it.
+        // If it's the last reference, loop back to the first reference
+        if (refIndex && refs.length > Number(refIndex) + 1) {
+          refs[Number(refIndex) + 1].current?.focus();
+        }
+        if (refIndex && refs.length === Number(refIndex) + 1) {
+          refs[0].current?.focus();
+        }
+        break;
+      default:
+        // Do nothing, i. e. blurAndSubmit
+        break;
+    }
+  }
 
   return (
     <View
@@ -36,6 +67,9 @@ export default function ShortTextInput({
           }
         }}
         secureTextEntry={!showPassword}
+        returnKeyType={returnKeyType || "next"}
+        ref={refs?.[refIndex] || null}
+        onSubmitEditing={handleOnSubmitEditing}
       />
       {secureTextEntry && (
         <Entypo

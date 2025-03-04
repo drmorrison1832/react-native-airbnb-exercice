@@ -1,5 +1,5 @@
 import { SafeAreaView, View, Text, Button } from "react-native";
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import axios from "axios";
 
@@ -20,37 +20,51 @@ import colors from "../../assets/styles/colors";
 export default function Register() {
   const { login } = useContext(AuthContext);
 
+  // Create input fields states and refs + refs array
+  const refsInOrder = [];
+
   const [email, setEmail] = useState("");
+  const emailRef = useRef(null);
+  refsInOrder.push(emailRef);
+
   const [username, setUsername] = useState("");
-  const [description, setDescription] = useState("");
+  const usernameRef = useRef(null);
+  refsInOrder.push(usernameRef);
+
   const [password, setPassword] = useState("");
+  const passwordRef = useRef(null);
+  refsInOrder.push(passwordRef);
+
   const [confirmPassword, setConfirmPassword] = useState("");
+  const confirmPasswordRef = useRef(null);
+  refsInOrder.push(confirmPasswordRef);
+
+  const [description, setDescription] = useState("");
+  const descriptionRef = useRef(null);
+  refsInOrder.push(descriptionRef);
+
+  const submitButtonRef = useRef(null);
+  refsInOrder.push(submitButtonRef);
+
+  // Create submition states
   const [errorMessage, setErrorMessage] = useState("");
   const [errorFields, setErrorFields] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit() {
-    console.log("handleSubmit...");
     let newErrorFields = [];
     setErrorMessage("");
 
-    switch (true) {
-      case !email:
-        newErrorFields.push("email");
-      case !username:
-        newErrorFields.push("username");
-      case !description:
-        newErrorFields.push("description");
-      case !password:
-        newErrorFields.push("password");
-      case !confirmPassword:
-        newErrorFields.push("confirmPassword");
-      default:
-        if (newErrorFields.length > 0) {
-          setErrorFields(newErrorFields);
-          setErrorMessage("Please fill all fields");
-          return;
-        }
+    email || newErrorFields.push("email");
+    username || newErrorFields.push("username");
+    description || newErrorFields.push("description");
+    password || newErrorFields.push("password");
+    confirmPassword || newErrorFields.push("confirmPassword");
+
+    if (newErrorFields.length > 0) {
+      setErrorFields(newErrorFields);
+      setErrorMessage("Please fill all fields");
+      return;
     }
 
     if (password !== confirmPassword) {
@@ -116,47 +130,66 @@ export default function Register() {
           <ScreenTitle title="Register" />
         </View>
         <ShortTextInput
+          refs={refsInOrder}
+          refIndex="0"
+          returnKeyType="next"
+          onSubmitEditing="next"
+          name="email"
           placeholder="email"
           state={email}
           setState={setEmail}
-          name="email"
           errorFields={errorFields}
           setErrorFields={setErrorFields}
         />
         <ShortTextInput
+          refs={refsInOrder}
+          refIndex="1"
+          returnKeyType="next"
+          onSubmitEditing="next"
+          name="username"
           placeholder="username"
           state={username}
           setState={setUsername}
-          name="username"
           errorFields={errorFields}
           setErrorFields={setErrorFields}
         />
 
         <LongTextInput
+          refs={refsInOrder}
+          refIndex="2"
+          onSubmitEditing="next"
+          name="description"
           placeholder="Describe yourself in a frew words..."
           state={description}
           setState={setDescription}
-          name="description"
           errorFields={errorFields}
           setErrorFields={setErrorFields}
         />
 
         <View style={[styles.containers.default, { gap: 20 }]}>
           <ShortTextInput
+            refs={refsInOrder}
+            refIndex="3"
+            returnKeyType="next"
+            onSubmitEditing="next"
+            name="password"
             placeholder="password"
             state={password}
             setState={setPassword}
-            name="password"
             errorFields={errorFields}
             setErrorFields={setErrorFields}
             secureTextEntry
           />
 
           <ShortTextInput
+            refs={refsInOrder}
+            refIndex="4"
+            returnKeyType="next"
+            onSubmitEditing="blur"
+            name="confirmPassword"
             placeholder="confirm password"
             state={confirmPassword}
             setState={setConfirmPassword}
-            name="confirmPassword"
             errorFields={errorFields}
             setErrorFields={setErrorFields}
             secureTextEntry
@@ -173,8 +206,16 @@ export default function Register() {
           </Text>
         </View>
         <View style={[styles.containers.default, { gap: 20 }]}>
-          <DefaultButton text="Register" onPress={handleSubmit} />
-          <NavText screen="/auth/login" text="Already have an account? Login" />
+          <DefaultButton
+            text="Register"
+            onPress={handleSubmit}
+            refs={refsInOrder}
+            refIndex="5"
+          />
+          <View style={styles.containers.inLineDefault}>
+            <NavText screen="/auth/login" text="Already have an account? " />
+            <NavText screen="/auth/login" text="Login" underline />
+          </View>
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

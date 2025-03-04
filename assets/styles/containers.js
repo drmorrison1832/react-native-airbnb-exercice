@@ -25,8 +25,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     // alignItems: "center",
     // justifyContent: "space-between",
-    borderColor: "pink",
-    borderWidth: 1,
+    // borderColor: "pink",
+    // borderWidth: 1,
     overflow: "hidden",
   },
 

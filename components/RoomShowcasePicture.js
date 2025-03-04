@@ -13,7 +13,7 @@ export default function RoomShowcasePicture({ URI, height, price }) {
     >
       {/* <PriceBox price={price} /> */}
       <View style={styles.containers.priceContainer}>
-        <Text style={styles.text.priceBoxText}>{price} €</Text>
+        <Text style={styles.text.priceBoxText}>{price} €</Text>
       </View>
     </ImageBackground>
   );

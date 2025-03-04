@@ -1,6 +1,6 @@
-import { SafeAreaView, View, Text } from "react-native";
+import { SafeAreaView, View, Text, Pressable } from "react-native";
 
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ActivityIndicator } from "react-native";
 // import handleConnection from "../../utils/handleConnection";
@@ -26,8 +26,21 @@ export default function Login() {
 
   const { login } = useContext(AuthContext);
 
+  // Create input fields states and refs + refs array
+  const refsInOrder = [];
+
   const [email, setEmail] = useState("");
+  const emailRef = useRef(null);
+  refsInOrder.push(emailRef);
+
   const [password, setPassword] = useState("");
+  const passwordRef = useRef(null);
+  refsInOrder.push(passwordRef);
+
+  const submitButtonRef = useRef(null);
+  refsInOrder.push(submitButtonRef);
+
+  // Create submition states
   const [errorMessage, setErrorMessage] = useState("");
   const [errorFields, setErrorFields] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -108,18 +121,26 @@ export default function Login() {
 
         <View style={[styles.containers.default, { gap: 20, borderWidth: 0 }]}>
           <ShortTextInput
+            refs={refsInOrder}
+            refIndex="0"
+            returnKeyType="next"
+            onSubmitEditing="next"
+            name="email"
             placeholder="email"
             state={email}
             setState={setEmail}
-            name="email"
             errorFields={errorFields}
             setErrorFields={setErrorFields}
           />
           <ShortTextInput
+            refs={refsInOrder}
+            refIndex="1"
+            returnKeyType="send"
+            onSubmitEditing={handleSubmit}
+            name="password"
             placeholder="password"
             state={password}
             setState={setPassword}
-            name="password"
             errorFields={errorFields}
             setErrorFields={setErrorFields}
             secureTextEntry
@@ -135,9 +156,22 @@ export default function Login() {
             text="Login"
             onPress={handleSubmit}
             disabled={isLoading}
+            refs={refsInOrder}
+            refIndex="2"
           />
-          <NavText screen="/auth/register" text="No account? Register" />
-          <Text>Did you forget your password?</Text>
+          <View style={styles.containers.inLineDefault}>
+            <NavText screen="/auth/register" text="No account? " />
+            <NavText screen="/auth/register" text="Register" underline />
+          </View>
+          <Pressable
+            onPress={() => {
+              alert(`Try "password"`);
+            }}
+          >
+            <Text style={{ textDecorationLine: "underline" }}>
+              Forgot your password?
+            </Text>
+          </Pressable>
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

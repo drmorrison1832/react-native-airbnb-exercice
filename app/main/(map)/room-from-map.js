@@ -72,30 +72,5 @@ export default function Room() {
     );
   }
 
-  return (
-    <ShowRoom roomData={roomData} />
-    // <SafeAreaView>
-    //   <ScrollView style={{ height: "100%" }}>
-    //     <RoomShowcasePicture
-    //       URI={roomData.photos[0].url}
-    //       height="300"
-    //       price={roomData.price}
-    //     />
-    //     <View style={{ padding: 20 }}>
-    //       <RoomHeader
-    //         title={roomData.title}
-    //         ratingValue={roomData.ratingValue}
-    //         reviews={roomData.reviews}
-    //         photoURI={roomData.user.account.photo.url}
-    //       />
-    //       <RoomDescription description={roomData.description} />
-    //     </View>
-
-    //     <RoomMap
-    //       latitude={roomData.location[1]}
-    //       longitude={roomData.location[0]}
-    //     />
-    //   </ScrollView>
-    // </SafeAreaView>
-  );
+  return <ShowRoom roomData={roomData} />;
 }

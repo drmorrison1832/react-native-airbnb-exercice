@@ -8,10 +8,11 @@ import {
 import colors from "../assets/styles/colors";
 import styles from "../assets/styles/styles";
 
-export default function ({ text, onPress, disabled }) {
+export default function ({ text, onPress, disabled, refs, refIndex }) {
   return (
     <>
       <Pressable
+        ref={refs?.[refIndex]}
         activeOpacity={1}
         underlayColor={colors.lightRed}
         onPress={onPress}

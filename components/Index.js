@@ -5,7 +5,6 @@ import LongTextInput from "./LongTextInput";
 import NavText from "./NavText";
 import DefaultButton from "./DefaultButton";
 import Rating from "./Rating";
-import PriceBox from "./PriceBox";
 import RoomHeader from "./RoomHeader";
 import RoomShowcasePicture from "./RoomShowcasePicture";
 import RoomDescription from "./RoomDescription";
@@ -21,7 +20,6 @@ export {
   NavText,
   DefaultButton,
   Rating,
-  PriceBox,
   RoomHeader,
   RoomShowcasePicture,
   RoomDescription,

@@ -9,6 +9,8 @@ export default function LongTextInput({
   name,
   errorFields,
   setErrorFields,
+  refs,
+  refIndex,
 }) {
   return (
     <View style={styles.containers.longTextInputContainer}>
@@ -30,6 +32,7 @@ export default function LongTextInput({
         }}
         multiline
         maxLength={250}
+        ref={refs?.[refIndex] || null}
       />
     </View>
   );

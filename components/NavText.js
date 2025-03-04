@@ -1,10 +1,12 @@
 import { Text } from "react-native";
 import { Link } from "expo-router";
 
-export default function NavText({ text, screen }) {
+export default function NavText({ text, screen, underline }) {
   return (
     <Link href={screen} replace>
-      <Text>{text}</Text>
+      <Text style={underline && { textDecorationLine: "underline" }}>
+        {text}
+      </Text>
     </Link>
   );
 }
