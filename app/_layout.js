@@ -42,7 +42,6 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    // console.log("isConnected?");
     if (isConnected) {
       router.replace("/main");
     } else {

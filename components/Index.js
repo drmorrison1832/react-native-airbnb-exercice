@@ -11,6 +11,7 @@ import RoomDescription from "./RoomDescription";
 import RoomMap from "./RoomMap";
 import RoomPicturesSwiper from "./RoomPicturesSwiper";
 import ShowRoom from "./ShowRoom";
+import AvatarPicker from "./AvatarPicker";
 
 export {
   Icons,
@@ -26,4 +27,5 @@ export {
   RoomMap,
   RoomPicturesSwiper,
   ShowRoom,
+  AvatarPicker,
 };

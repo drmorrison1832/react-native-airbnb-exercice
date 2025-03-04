@@ -1,6 +1,9 @@
+// https://icons.expo.fyi/Index
+
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Pressable } from "react-native";
 
@@ -14,6 +17,7 @@ export default {
   StarRateFull,
   StarRateHalf,
   StarRateEmpty,
+  TakePhoto,
   User,
 };
 
@@ -124,6 +128,16 @@ function StarRateEmpty(props) {
   return (
     <MaterialIcons
       name="star-border"
+      size={sizeIndex(props?.size)}
+      color={props.color}
+    />
+  );
+}
+
+function TakePhoto(props) {
+  return (
+    <MaterialCommunityIcons
+      name="camera-plus"
       size={sizeIndex(props?.size)}
       color={props.color}
     />

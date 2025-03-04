@@ -13,9 +13,11 @@ export default function ShortTextInput({
   errorFields,
   setErrorFields,
   returnKeyType,
-  refs,
-  refIndex,
+  // refs,
+  // refIndex,
   onSubmitEditing,
+  currentRef,
+  nextRef,
 }) {
   const [showPassword, setShowpassword] = useState(!secureTextEntry);
 
@@ -31,15 +33,16 @@ export default function ShortTextInput({
         null;
         break;
       case "next":
-        // If there's still a ref, focus on it.
-        // If it's the last reference, loop back to the first reference
-        if (refIndex && refs.length > Number(refIndex) + 1) {
-          refs[Number(refIndex) + 1].current?.focus();
-        }
-        if (refIndex && refs.length === Number(refIndex) + 1) {
-          refs[0].current?.focus();
-        }
-        break;
+        return nextRef ? nextRef.current?.focus() : null;
+      // // If there's still a ref, focus on it.
+      // if (refIndex && refs.length > Number(refIndex) + 1) {
+      //   refs[Number(refIndex) + 1].current?.focus();
+      // }
+      // // If it's the last reference, loop back to the first reference
+      // if (refIndex && refs.length === Number(refIndex) + 1) {
+      //   refs[0].current?.focus();
+      // }
+      // break;
       default:
         // Do nothing, i. e. blurAndSubmit
         break;
@@ -68,7 +71,8 @@ export default function ShortTextInput({
         }}
         secureTextEntry={!showPassword}
         returnKeyType={returnKeyType || "next"}
-        ref={refs?.[refIndex] || null}
+        // ref={refs?.[refIndex] || null}
+        ref={currentRef || null}
         onSubmitEditing={handleOnSubmitEditing}
       />
       {secureTextEntry && (

@@ -9,7 +9,7 @@ import {
 } from "../components/Index";
 
 export default function ShowRoom({ roomData }) {
-  console.log("roomData is", roomData);
+  // console.log("roomData is", roomData);
   return (
     <SafeAreaView>
       <ScrollView style={{ height: "100%" }}>

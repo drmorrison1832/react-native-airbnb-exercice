@@ -26,19 +26,13 @@ export default function Login() {
 
   const { login } = useContext(AuthContext);
 
-  // Create input fields states and refs + refs array
-  const refsInOrder = [];
-
   const [email, setEmail] = useState("");
   const emailRef = useRef(null);
-  refsInOrder.push(emailRef);
 
   const [password, setPassword] = useState("");
   const passwordRef = useRef(null);
-  refsInOrder.push(passwordRef);
 
   const submitButtonRef = useRef(null);
-  refsInOrder.push(submitButtonRef);
 
   // Create submition states
   const [errorMessage, setErrorMessage] = useState("");
@@ -115,14 +109,14 @@ export default function Login() {
         ]}
       >
         <View style={[styles.containers.default, { gap: 20, borderWidth: 0 }]}>
-          <Icons.Airbnb size="large" color={colors.mainRed} />
+          <Icons.Airbnb size="M" color={colors.mainRed} />
           <ScreenTitle title="Login" />
         </View>
 
         <View style={[styles.containers.default, { gap: 20, borderWidth: 0 }]}>
           <ShortTextInput
-            refs={refsInOrder}
-            refIndex="0"
+            currentRef={emailRef}
+            nextRef={passwordRef}
             returnKeyType="next"
             onSubmitEditing="next"
             name="email"
@@ -133,8 +127,8 @@ export default function Login() {
             setErrorFields={setErrorFields}
           />
           <ShortTextInput
-            refs={refsInOrder}
-            refIndex="1"
+            currentRef={passwordRef}
+            nextRef={submitButtonRef}
             returnKeyType="send"
             onSubmitEditing={handleSubmit}
             name="password"
@@ -146,6 +140,15 @@ export default function Login() {
             secureTextEntry
           />
         </View>
+        <Pressable
+          onPress={() => {
+            alert(`Well, thats annoying...`);
+          }}
+        >
+          <Text style={{ textDecorationLine: "underline" }}>
+            Forgot your password?
+          </Text>
+        </Pressable>
         <View style={[{ height: 25 }]}>
           <Text style={[styles.text.errorMessage]}>{errorMessage}</Text>
           {isLoading && <ActivityIndicator />}
@@ -156,22 +159,18 @@ export default function Login() {
             text="Login"
             onPress={handleSubmit}
             disabled={isLoading}
-            refs={refsInOrder}
-            refIndex="2"
+            currentRef={submitButtonRef}
           />
           <View style={styles.containers.inLineDefault}>
             <NavText screen="/auth/register" text="No account? " />
             <NavText screen="/auth/register" text="Register" underline />
           </View>
-          <Pressable
-            onPress={() => {
-              alert(`Try "password"`);
-            }}
-          >
-            <Text style={{ textDecorationLine: "underline" }}>
-              Forgot your password?
-            </Text>
-          </Pressable>
+
+          <NavText
+            screen="../main"
+            text="Or just wander arround... "
+            underline
+          />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

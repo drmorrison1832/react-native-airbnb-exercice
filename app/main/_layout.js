@@ -8,7 +8,6 @@ export default function MainLayout() {
   console.log("Rendering MainLayout");
 
   const currentScreen = usePathname();
-  console.log("currentScreen is", currentScreen);
 
   return (
     <Tabs

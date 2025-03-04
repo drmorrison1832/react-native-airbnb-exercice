@@ -4,7 +4,6 @@ import styles from "../assets/styles/styles";
 // import PriceBox from "./PriceBox";
 
 export default function RoomShowcasePicture({ URI, height, price }) {
-  console.log(price);
   return (
     <ImageBackground
       source={{ uri: URI }}

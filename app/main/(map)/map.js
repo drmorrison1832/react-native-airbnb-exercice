@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
-import { View, Text, ActivityIndicator, Pressable } from "react-native";
+import { View, Text, ActivityIndicator, Image, Pressable } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { router } from "expo-router";
+import * as Location from "expo-location";
 
 import axios from "axios";
 
 import styles from "../../../assets/styles/styles";
+import colors from "../../../assets/styles/colors";
+
+import Icon from "../../../components/Icons";
 
 export default function ArroundMe() {
   console.log("Rendering ArroundMe");
@@ -14,8 +18,28 @@ export default function ArroundMe() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(true);
 
+  // Default position (Paris)
   const [latitude, setLatitude] = useState(48.866667);
   const [longitude, setLongitude] = useState(2.3333);
+
+  useEffect(() => {
+    async function askLocationPermission() {
+      console.log("askLocationPermission...");
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+
+        if (status === "granted") {
+          let location = await Location.getCurrentPositionAsync({});
+          console.log("location =>", location); // console.log permettant de visualiser l'objet obtenu
+          setLatitude(location.coords.latitude);
+          setLongitude(location.coords.longitude);
+        }
+      } catch (error) {
+        console.error(error?.message);
+      }
+    }
+    askLocationPermission();
+  }, []);
 
   useEffect(() => {
     setError(null);
@@ -31,7 +55,7 @@ export default function ArroundMe() {
         setSourroundingRooms(response.data);
         setIsLoading(false);
       } catch (error) {
-        console.log(error?.message);
+        console.error("retrieveSourroundingRooms error", error?.message);
         setError(error?.message);
         setIsLoading(false);
       }
@@ -61,8 +85,8 @@ export default function ArroundMe() {
       initialRegion={{
         latitude: latitude,
         longitude: longitude,
-        latitudeDelta: 0.3,
-        longitudeDelta: 0.3,
+        latitudeDelta: 0.025,
+        longitudeDelta: 0.025,
       }}
       showsUserLocation={true}
       onRegionChangeComplete={(coordinates) => {
@@ -80,7 +104,6 @@ export default function ArroundMe() {
             }}
             title={room.title}
             description={room.description}
-            // image={{ URI: room.photos[0].url }}
             onPress={() => {
               router.navigate({
                 pathname: "./room-from-map",
@@ -88,15 +111,20 @@ export default function ArroundMe() {
               });
             }}
           >
-            {/* <Pressable
-            ></Pressable> */}
-            {/* <Image
-              source={{
-                uri: room.photos[0].url,
-                }}
-                style={{ height: 100, width: 100, borderRadius: 50 }}
-                resizeMode="contain"
-                /> */}
+            <View
+              style={{
+                backgroundColor: colors.mainRed,
+                borderColor: "white",
+                borderWidth: 2,
+                borderRadius: "50%",
+                height: 40,
+                width: 40,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Icon.Airbnb size="S" color={"white"} />
+            </View>
           </Marker>
         );
       })}

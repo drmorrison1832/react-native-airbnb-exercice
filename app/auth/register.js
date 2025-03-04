@@ -1,7 +1,16 @@
-import { SafeAreaView, View, Text, Button } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  Button,
+  Pressable,
+  Image,
+} from "react-native";
 import { useState, useContext, useRef } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import axios from "axios";
+
+import * as ImagePicker from "expo-image-picker";
 
 import {
   Icons,
@@ -10,6 +19,7 @@ import {
   LongTextInput,
   NavText,
   DefaultButton,
+  AvatarPicker,
 } from "../../components/Index";
 
 import styles from "../../assets/styles/styles";
@@ -25,26 +35,20 @@ export default function Register() {
 
   const [email, setEmail] = useState("");
   const emailRef = useRef(null);
-  refsInOrder.push(emailRef);
 
   const [username, setUsername] = useState("");
   const usernameRef = useRef(null);
-  refsInOrder.push(usernameRef);
-
-  const [password, setPassword] = useState("");
-  const passwordRef = useRef(null);
-  refsInOrder.push(passwordRef);
-
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const confirmPasswordRef = useRef(null);
-  refsInOrder.push(confirmPasswordRef);
 
   const [description, setDescription] = useState("");
   const descriptionRef = useRef(null);
-  refsInOrder.push(descriptionRef);
+
+  const [password, setPassword] = useState("");
+  const passwordRef = useRef(null);
+
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const confirmPasswordRef = useRef(null);
 
   const submitButtonRef = useRef(null);
-  refsInOrder.push(submitButtonRef);
 
   // Create submition states
   const [errorMessage, setErrorMessage] = useState("");
@@ -126,12 +130,15 @@ export default function Register() {
         ]}
       >
         <View style={[styles.containers.default, { gap: 20 }]}>
-          <Icons.Airbnb size="large" color={colors.mainRed} />
+          <Icons.Airbnb size="M" color={colors.mainRed} />
           <ScreenTitle title="Register" />
         </View>
+        <View style={[styles.containers.default, { marginTop: 20 }]}>
+          <AvatarPicker />
+        </View>
         <ShortTextInput
-          refs={refsInOrder}
-          refIndex="0"
+          currentRef={emailRef}
+          nextRef={usernameRef}
           returnKeyType="next"
           onSubmitEditing="next"
           name="email"
@@ -142,8 +149,8 @@ export default function Register() {
           setErrorFields={setErrorFields}
         />
         <ShortTextInput
-          refs={refsInOrder}
-          refIndex="1"
+          currentRef={usernameRef}
+          nextRef={descriptionRef}
           returnKeyType="next"
           onSubmitEditing="next"
           name="username"
@@ -155,8 +162,8 @@ export default function Register() {
         />
 
         <LongTextInput
-          refs={refsInOrder}
-          refIndex="2"
+          currentRef={descriptionRef}
+          nextRef={passwordRef}
           onSubmitEditing="next"
           name="description"
           placeholder="Describe yourself in a frew words..."
@@ -168,8 +175,8 @@ export default function Register() {
 
         <View style={[styles.containers.default, { gap: 20 }]}>
           <ShortTextInput
-            refs={refsInOrder}
-            refIndex="3"
+            currentRef={passwordRef}
+            nextRef={confirmPasswordRef}
             returnKeyType="next"
             onSubmitEditing="next"
             name="password"
@@ -182,8 +189,8 @@ export default function Register() {
           />
 
           <ShortTextInput
-            refs={refsInOrder}
-            refIndex="4"
+            currentRef={confirmPasswordRef}
+            nextRef={submitButtonRef}
             returnKeyType="next"
             onSubmitEditing="blur"
             name="confirmPassword"
@@ -207,10 +214,9 @@ export default function Register() {
         </View>
         <View style={[styles.containers.default, { gap: 20 }]}>
           <DefaultButton
+            currentRef={submitButtonRef}
             text="Register"
             onPress={handleSubmit}
-            refs={refsInOrder}
-            refIndex="5"
           />
           <View style={styles.containers.inLineDefault}>
             <NavText screen="/auth/login" text="Already have an account? " />
