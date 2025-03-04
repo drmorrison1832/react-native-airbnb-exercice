@@ -14,8 +14,8 @@ export default function ArroundMe() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(true);
 
-  const latitude = 48.866667;
-  const longitude = 2.3333;
+  const [latitude, setLatitude] = useState(48.866667);
+  const [longitude, setLongitude] = useState(2.3333);
 
   useEffect(() => {
     setError(null);
@@ -37,7 +37,7 @@ export default function ArroundMe() {
       }
     }
     retrieveSourroundingRooms();
-  }, []);
+  }, [latitude, longitude]);
 
   if (isLoading) {
     return (
@@ -65,6 +65,10 @@ export default function ArroundMe() {
         longitudeDelta: 0.3,
       }}
       showsUserLocation={true}
+      onRegionChangeComplete={(coordinates) => {
+        setLatitude(coordinates.latitude);
+        setLongitude(coordinates.longitude);
+      }}
     >
       {sourroundingRooms.map((room) => {
         return (

@@ -13,15 +13,6 @@ export default function Profile() {
   if (isConnected) {
     return (
       <View style={[styles.containers.fullScreen]}>
-        <View stylme={[styles.containers.default]}>
-          <Text>{userInfo.username}</Text>
-        </View>
-        <View stylme={[styles.containers.default]}>
-          <Text>« {userInfo.description} »</Text>
-        </View>
-        <View stylme={[styles.containers.default]}>
-          <Text>{userInfo.email}</Text>
-        </View>
         <DefaultButton text="Logout" onPress={logout}></DefaultButton>
       </View>
     );
