@@ -5,6 +5,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Entypo from "@expo/vector-icons/Entypo";
 import { Pressable } from "react-native";
 
 export default {
@@ -13,11 +14,13 @@ export default {
   CaretUp,
   CaretDown,
   CaretLeft,
+  Images,
   MapMarker,
   StarRateFull,
   StarRateHalf,
   StarRateEmpty,
   TakePhoto,
+  Trash,
   User,
 };
 
@@ -94,6 +97,12 @@ function CaretUp(props) {
   );
 }
 
+function Images(props) {
+  return (
+    <Entypo name="images" size={sizeIndex(props?.size)} color={props.color} />
+  );
+}
+
 function MapMarker(props) {
   return (
     <FontAwesome
@@ -138,6 +147,16 @@ function TakePhoto(props) {
   return (
     <MaterialCommunityIcons
       name="camera-plus"
+      size={sizeIndex(props?.size)}
+      color={props.color}
+    />
+  );
+}
+
+function Trash(props) {
+  return (
+    <FontAwesome5
+      name="trash"
       size={sizeIndex(props?.size)}
       color={props.color}
     />

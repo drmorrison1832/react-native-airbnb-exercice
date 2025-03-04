@@ -44,10 +44,13 @@ export default function AvatarPicker() {
     try {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
       if (status === "granted") {
-        const result = await ImagePicker.launchCameraAsync();
+        const result = await ImagePicker.launchCameraAsync({
+          cameraType: "front",
+          allowsEditing: true,
+        });
 
         if (result.canceled === true) {
-          alert("Pas de photo sélectionnée");
+          return;
         } else {
           setSelectedPicture(result.assets[0].uri);
         }
@@ -62,19 +65,43 @@ export default function AvatarPicker() {
       <View style={{ flexDirection: "row", gap: 20 }}>
         <View
           style={{
-            borderRadius: "50%",
-            height: 100,
-            width: 100,
-            borderWidth: 2,
-            borderColor: colors.lightRed,
+            height: 120,
+            width: 120,
             justifyContent: "center",
             alignItems: "center",
+            overflow: "hidden",
           }}
         >
+          {selectedPicture && (
+            <Pressable
+              style={{
+                position: "absolute",
+                top: 8,
+                right: 8,
+                zIndex: 2,
+                backgroundColor: "white",
+                padding: 3,
+                borderWidth: 1,
+                borderRadius: "50%",
+                borderColor: colors.lightRed,
+              }}
+              onPress={() => {
+                setSelectedPicture("null");
+              }}
+            >
+              <Icons.Trash color={colors.lightGrey1} size="XS" />
+            </Pressable>
+          )}
           {selectedPicture ? (
             <Image
               source={{ uri: selectedPicture }}
-              style={{ height: 100, width: 100 }}
+              style={{
+                height: 120,
+                width: 120,
+                borderRadius: "50%",
+                borderColor: colors.lightRed,
+                borderWidth: 2,
+              }}
             ></Image>
           ) : (
             <Icons.User color={colors.lightGrey2} />
@@ -84,24 +111,15 @@ export default function AvatarPicker() {
           style={{
             justifyContent: "space-around",
             // padding: 20,
-            borderWidth: 1,
+            // borderWidth: 1,
           }}
         >
           <Pressable onPress={getPermissionAndGetPicture}>
-            <Text>Chose a photo</Text>
+            <Icons.Images size="S" color={colors.lightGrey1} />
           </Pressable>
 
           <Pressable onPress={getPermissionAndTakePicture}>
-            <Text>Take a photo</Text>
-          </Pressable>
-
-          <Pressable
-            // style={{ position: "absolute", top: 0, left: 0 }}
-            onPress={() => {
-              setSelectedPicture("null");
-            }}
-          >
-            <Text>Discard</Text>
+            <Icons.TakePhoto size="S" color={colors.lightGrey1} />
           </Pressable>
         </View>
       </View>
