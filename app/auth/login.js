@@ -1,9 +1,12 @@
-import { SafeAreaView, View, Text, Pressable } from "react-native";
-
+import {
+  SafeAreaView,
+  View,
+  Text,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import { useState, useContext, useRef } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { ActivityIndicator } from "react-native";
-// import handleConnection from "../../utils/handleConnection";
 
 import axios from "axios";
 
@@ -15,33 +18,34 @@ import {
   DefaultButton,
 } from "../../components/Index";
 
-import colors from "../../assets/styles/colors";
-
-import styles from "../../assets/styles/styles";
-
 import AuthContext from "../../context/AuthContext";
+
+import colors from "../../assets/styles/colors";
+import styles from "../../assets/styles/styles";
 
 export default function Login() {
   console.log("Rendering Login");
 
   const { login } = useContext(AuthContext);
 
+  // States for input fields
   const [email, setEmail] = useState("");
-  const emailRef = useRef(null);
-
   const [password, setPassword] = useState("");
-  const passwordRef = useRef(null);
 
+  // refs for inputs so RETURN key jumps to next field)
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
   const submitButtonRef = useRef(null);
 
-  // Create submition states
+  // Submition states
   const [errorMessage, setErrorMessage] = useState("");
   const [errorFields, setErrorFields] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit() {
     console.log("handleSubmit...");
-    let newErrorFields = [];
+
+    const newErrorFields = [];
     setErrorMessage("");
 
     switch (true) {
@@ -73,10 +77,8 @@ export default function Login() {
       login(response.data);
 
       setIsLoading(false);
-      setErrorFields([]);
-      setErrorMessage("");
     } catch (error) {
-      console.error(error.message);
+      // console.log(error?.response?.data?.error);
       switch (error?.status) {
         case 400:
           setErrorFields(["email", "password"]);
@@ -104,7 +106,6 @@ export default function Login() {
             justifyContent: "space-between",
             padding: 30,
             gap: 20,
-            borderWidth: 0,
           },
         ]}
       >

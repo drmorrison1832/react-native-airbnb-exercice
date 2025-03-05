@@ -12,6 +12,7 @@ export default function LongTextInput({
   setErrorFields,
   currentRef,
   refIndex,
+  style,
 }) {
   return (
     <View style={styles.containers.longTextInputContainer}>
@@ -19,6 +20,7 @@ export default function LongTextInput({
         style={[
           styles.inputs.defaultLongTextInput,
           errorFields.includes(name) && styles.containers.errorInputContainer,
+          style,
         ]}
         placeholder={placeholder}
         placeholderTextColor={placeholderTextColor}

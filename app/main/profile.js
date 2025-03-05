@@ -10,98 +10,182 @@ import axios from "axios";
 import styles from "../../assets/styles/styles";
 
 import {
-  Icons,
-  ScreenTitle,
   ShortTextInput,
   LongTextInput,
-  NavText,
   DefaultButton,
   AvatarPicker,
 } from "../../components/Index";
+import colors from "../../assets/styles/colors";
 
 export default function Profile() {
   console.log("Rendering Profile");
-  const { userInfo, login, logout, updateUserAsyncStorage, isConnected } =
+  const { userInfo, logout, updateUserAsyncStorage, isConnected } =
     useContext(AuthContext);
 
-  // Create input fields states and refs + refs array
+  // States for input fields
   const [email, setEmail] = useState("");
-  const emailRef = useRef(null);
-
   const [username, setUsername] = useState("");
-  const usernameRef = useRef(null);
-
   const [description, setDescription] = useState("");
-  const descriptionRef = useRef(null);
+  const [currentPhotoURL, setcurrentPhotoURL] = useState(
+    userInfo?.photo?.url || null
+  );
+  const [newPhoto, setNewPhoto] = useState(null);
 
+  // refs for inputs so RETURN key jumps to next field)
+  const emailRef = useRef(null);
+  const usernameRef = useRef(null);
+  const descriptionRef = useRef(null);
   const submitButtonRef = useRef(null);
 
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
-
-  // Create retrieved user info states
+  // Retrieved user info states
   const [retrievedEmail, setRetrievedEmail] = useState("");
   const [retrievedUsername, setRetrievedUsername] = useState("");
   const [retrievedDescription, setRetrievedDescription] = useState("");
-  const [retrievedPhoto, setRetrievedPhoto] = useState("");
 
-  function updateUserStates(data) {
+  function updateRetrievedStates(data) {
+    // Reference needed to know if inputs changed
     data?.email && setRetrievedEmail(data.email);
     data?.username && setRetrievedUsername(data.username);
-    data?.description && setRetrievedDescription(data.description.trim());
-    data?.photo && setRetrievedPhoto(data.photo);
+    data?.description && setRetrievedDescription(data.description);
   }
 
-  // Create submition states
+  function updateInputStates(data) {
+    // After each server request form fields will match server response
+    data?.email && setEmail(data.email);
+    data?.username && setUsername(data.username);
+    data?.description && setDescription(data.description);
+  }
+
+  // Submition states
   const [errorMessage, setErrorMessage] = useState("");
   const [errorFields, setErrorFields] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (!isConnected) {
-      return;
-    }
-    async function getUserDataAndUpdateLocalStorage() {
-      try {
-        const URL =
-          "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/" +
-          userInfo.id;
-        const config = {
-          headers: { Authorization: "Bearer " + userInfo.token },
-        };
-
-        let response = await axios.get(URL, config);
-        console.log("response.data is", response.data);
-
-        updateUserStates(response.data);
-        updateUserAsyncStorage(response.data);
-
-        setEmail(response.data.email);
-        setUsername(response.data.username);
-        setDescription(response.data.description);
-
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error.message);
-        setErrorMessage(error.message);
-
-        setIsLoading(false);
-      }
-    }
-    getUserDataAndUpdateLocalStorage();
-  }, []);
-
   useFocusEffect(
+    // Replaces useEffect: https://docs.expo.dev/versions/latest/sdk/router/
     useCallback(() => {
-      console.log(`Focused!`);
+      // Reduces frequency of effect, allows dependency array
+      if (!isConnected) {
+        return;
+      }
+      async function getUserDataAndUpdateLocalStorage() {
+        setIsLoading(true);
+        try {
+          const URL =
+            "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/" +
+            userInfo.id;
+          const config = {
+            headers: { Authorization: "Bearer " + userInfo.token },
+          };
+
+          const response = await axios.get(URL, config);
+          console.log("response.data is", response.data);
+
+          updateUserAsyncStorage(response.data);
+          updateRetrievedStates(response.data);
+          updateInputStates(response.data);
+
+          setIsLoading(false);
+        } catch (error) {
+          setErrorMessage(error?.response?.data?.error || error.message);
+          setIsLoading(false);
+        }
+      }
+      getUserDataAndUpdateLocalStorage();
+
       return () => {
-        console.log("Unfocused.");
+        // Errors are reinitialized when switching to another tab
         setErrorFields([]);
         setErrorMessage("");
       };
     }, [])
   );
 
-  // RENDER
+  async function handleSubmit() {
+    const newErrorFields = [];
+    setErrorFields([]);
+    setErrorMessage("");
+
+    // If any field is empty, push it to array
+    email || newErrorFields.push("email");
+    username || newErrorFields.push("username");
+    description || newErrorFields.push("description");
+
+    if (newErrorFields.length > 0) {
+      setErrorFields(newErrorFields);
+      setErrorMessage("Please fill all fields");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      if (newPhoto) {
+        console.log("Uploading new photo...");
+
+        const URLUserPhoto =
+          "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/upload_picture";
+
+        const formData = new FormData();
+
+        formData.append("photo", newPhoto);
+
+        const configUserPhoto = {
+          headers: { Authorization: "Bearer " + userInfo.token },
+          "Content-Type": "multipart/form-data",
+        };
+
+        await axios.put(URLUserPhoto, formData, configUserPhoto);
+      }
+
+      console.log("Uploading user info...");
+
+      const URLUserInfo =
+        "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/update";
+
+      const bodyUserInfo = { email, username, description: description.trim() };
+
+      const configUserInfo = {
+        headers: { Authorization: "Bearer " + userInfo.token },
+      };
+
+      const responseUserInfo = await axios.put(
+        URLUserInfo,
+        bodyUserInfo,
+        configUserInfo
+      );
+
+      console.log("Updating local user info...");
+      console.log(responseUserInfo.data);
+      updateUserAsyncStorage(responseUserInfo.data);
+      updateRetrievedStates(responseUserInfo.data);
+      updateInputStates(responseUserInfo.data);
+
+      setIsLoading(false);
+    } catch (error) {
+      // HAVEN'T TESTED THIS
+      console.log(error?.response?.data?.error);
+
+      error?.response?.data?.error.includes("email") &&
+        newErrorFields.push("email");
+      error?.response?.data?.error.includes("username") &&
+        newErrorFields.push("username");
+      error?.response?.data?.error.includes("description") &&
+        newErrorFields.push("description");
+      error?.response?.data?.error.includes("password") &&
+        newErrorFields.push("password", "confirmPassword");
+
+      if (newErrorFields.length === 0) {
+        setErrorMessage("Something went wrong");
+      } else {
+        setErrorFields(newErrorFields);
+        setErrorMessage(error?.response?.data?.error);
+      }
+
+      setIsLoading(false);
+      return;
+    }
+  }
 
   if (!isConnected) {
     // return <Redirect href="../auth" />;
@@ -131,23 +215,23 @@ export default function Profile() {
     );
   }
 
-  console.log(username);
-
   return (
     <View style={[styles.containers.fullScreen]}>
       <KeyboardAwareScrollView
         style={[{ alignSelf: "stretch", borderWidth: 0 }]}
         contentContainerStyle={[
           {
-            justifyContent: "space-between",
             padding: 30,
             gap: 20,
-            borderWidth: 0,
           },
         ]}
       >
-        <View style={[styles.containers.default, { marginTop: 20 }]}>
-          <AvatarPicker state={selectedPhoto} setState={setSelectedPhoto} />
+        <View style={[styles.containers.default, { marginVertical: 20 }]}>
+          <AvatarPicker
+            state={newPhoto}
+            setState={setNewPhoto}
+            currentPhotoURL={currentPhotoURL}
+          />
         </View>
         <ShortTextInput
           currentRef={emailRef}
@@ -160,6 +244,7 @@ export default function Profile() {
           setState={setEmail}
           errorFields={errorFields}
           setErrorFields={setErrorFields}
+          style={email === retrievedEmail && { color: colors.darkGrey }}
         />
         <ShortTextInput
           currentRef={usernameRef}
@@ -172,6 +257,7 @@ export default function Profile() {
           setState={setUsername}
           errorFields={errorFields}
           setErrorFields={setErrorFields}
+          style={username === retrievedUsername && { color: colors.darkGrey }}
         />
         <LongTextInput
           currentRef={descriptionRef}
@@ -182,78 +268,32 @@ export default function Profile() {
           setState={setDescription}
           errorFields={errorFields}
           setErrorFields={setErrorFields}
+          style={
+            description === retrievedDescription && { color: colors.darkGrey }
+          }
         />
 
         <View style={[styles.containers.default, { height: 25 }]}>
-          <Text
-            style={[
-              styles.text.errorMessage,
-              // errorMessage ? { display: "flex" } : { display: "none" },
-            ]}
-          >
-            {errorMessage}
-          </Text>
+          <Text style={[styles.text.errorMessage]}>{errorMessage}</Text>
         </View>
-
-        <DefaultButton
-          text="Update info"
-          currentRef={submitButtonRef}
-          onPress={handleSubmit}
-          disabled={
-            isLoading ||
-            (retrievedDescription === description &&
-              retrievedEmail === email &&
-              retrievedUsername === username) ||
-            errorFields.length > 0
-          }
-        />
-        <DefaultButton text="Logout" onPress={logout}></DefaultButton>
+        <View style={[styles.containers.default, { gap: 20, borderWidth: 0 }]}>
+          <DefaultButton
+            text="Update info"
+            currentRef={submitButtonRef}
+            onPress={handleSubmit}
+            // If any field changed or if user choses a new photo, then submitting is enabled
+            disabled={
+              isLoading ||
+              (retrievedDescription === description &&
+                retrievedEmail === email &&
+                retrievedUsername === username &&
+                !newPhoto) ||
+              errorFields.length > 0
+            }
+          />
+          <DefaultButton text="Logout" onPress={logout}></DefaultButton>
+        </View>
       </KeyboardAwareScrollView>
     </View>
   );
-
-  //
-
-  async function handleSubmit() {
-    let newErrorFields = [];
-    setErrorMessage("");
-
-    email || newErrorFields.push("email");
-    username || newErrorFields.push("username");
-    description || newErrorFields.push("description");
-
-    if (newErrorFields.length > 0) {
-      setErrorFields(newErrorFields);
-      setErrorMessage("Please fill all fields");
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-
-      const URL =
-        "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/update";
-
-      const body = { email, username, description: description.trim() };
-
-      const config = {
-        headers: { Authorization: "Bearer " + userInfo.token },
-      };
-
-      let response = await axios.put(URL, body, config);
-
-      updateUserStates(response.data);
-      updateUserAsyncStorage(response.data);
-
-      setIsLoading(false);
-      setErrorFields([]);
-      setErrorMessage("");
-    } catch (error) {
-      // console.error(Object.keys(error.response));
-      console.log(error.response.data.error);
-      setErrorMessage(error?.response?.data?.error);
-      setIsLoading(false);
-      return;
-    }
-  }
 }

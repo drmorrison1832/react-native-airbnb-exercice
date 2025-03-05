@@ -14,7 +14,7 @@ import {
   DefaultButton,
 } from "../components/Index";
 
-export default function AvatarPicker({ state, setState }) {
+export default function AvatarPicker({ state, setState, currentPhotoURL }) {
   // const [state, setState] = useState(null);
 
   async function getPermissionAndGetPicture() {
@@ -31,7 +31,16 @@ export default function AvatarPicker({ state, setState }) {
         console.log("ImagePicker.launchImageLibraryAsync result is", result);
         if (result.canceled === true) {
         } else {
-          setState(result.assets[0].uri);
+          // console.log("result is", result);
+          // console.log("mime type is", result.assets[0].mimeType);
+          let newPhoto = {
+            uri: result.assets[0].uri,
+            mimeType: result.assets[0].mimeType,
+            name: "my-pic." + result.assets[0].fileName.split(".").pop(),
+          };
+          // console.log("newPhoto", newPhoto);
+
+          setState(newPhoto);
         }
       }
     } catch (error) {
@@ -53,6 +62,7 @@ export default function AvatarPicker({ state, setState }) {
         if (result.canceled === true) {
           return;
         } else {
+          console.log("result is", result);
           setState(result.assets[0].uri);
         }
       }
@@ -134,7 +144,18 @@ export default function AvatarPicker({ state, setState }) {
 
           {state ? (
             <Image
-              source={{ uri: state }}
+              source={{ uri: state.uri }}
+              style={{
+                height: 120,
+                width: 120,
+                borderRadius: "50%",
+                borderColor: colors.lightRed,
+                borderWidth: 2,
+              }}
+            ></Image>
+          ) : currentPhotoURL ? (
+            <Image
+              source={{ uri: currentPhotoURL }}
               style={{
                 height: 120,
                 width: 120,
