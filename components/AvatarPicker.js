@@ -14,25 +14,24 @@ import {
   DefaultButton,
 } from "../components/Index";
 
-export default function AvatarPicker() {
-  const [selectedPicture, setSelectedPicture] = useState(null);
+export default function AvatarPicker({ state, setState }) {
+  // const [state, setState] = useState(null);
 
   async function getPermissionAndGetPicture() {
-    console.log("Getting user permission to acces photo library...");
-
+    console.log("Accessing library...");
     try {
       const { status } =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status === "granted") {
+        console.log("Persmission granted");
         const result = await ImagePicker.launchImageLibraryAsync({
           allowsEditing: true,
           aspect: [1, 1],
         });
-
+        console.log("ImagePicker.launchImageLibraryAsync result is", result);
         if (result.canceled === true) {
-          alert("Pas de photo sélectionnée");
         } else {
-          setSelectedPicture(result.assets[0].uri);
+          setState(result.assets[0].uri);
         }
       }
     } catch (error) {
@@ -41,18 +40,20 @@ export default function AvatarPicker() {
   }
 
   async function getPermissionAndTakePicture() {
+    console.log("Accessing camera...");
     try {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
       if (status === "granted") {
+        console.log("Persmission granted");
         const result = await ImagePicker.launchCameraAsync({
           cameraType: "front",
           allowsEditing: true,
         });
-
+        console.log("ImagePicker.launchCameraAsync result is", result);
         if (result.canceled === true) {
           return;
         } else {
-          setSelectedPicture(result.assets[0].uri);
+          setState(result.assets[0].uri);
         }
       }
     } catch (error) {
@@ -69,32 +70,71 @@ export default function AvatarPicker() {
             width: 120,
             justifyContent: "center",
             alignItems: "center",
-            overflow: "hidden",
+            // overflow: "hidden",
           }}
         >
-          {selectedPicture && (
+          {state && (
             <Pressable
               style={{
                 position: "absolute",
-                top: 8,
-                right: 8,
+                top: 7,
+                right: 7,
                 zIndex: 2,
                 backgroundColor: "white",
-                padding: 3,
+                padding: 5,
                 borderWidth: 1,
                 borderRadius: "50%",
                 borderColor: colors.lightRed,
               }}
               onPress={() => {
-                setSelectedPicture("null");
+                setState(null);
               }}
             >
               <Icons.Trash color={colors.lightGrey1} size="XS" />
             </Pressable>
           )}
-          {selectedPicture ? (
+          <Pressable
+            style={{
+              position: "absolute",
+              bottom: state ? 5 : 0,
+              left: state ? 5 : -3,
+              zIndex: 2,
+              backgroundColor: "white",
+              padding: 5,
+              borderWidth: 1,
+              borderRadius: "50%",
+              borderColor: colors.lightRed,
+            }}
+            onPress={getPermissionAndGetPicture}
+          >
+            <Icons.Images
+              size={state ? "XS" : "S"}
+              color={state ? colors.darkGrey : colors.lightGrey1}
+            />
+          </Pressable>
+          <Pressable
+            style={{
+              position: "absolute",
+              bottom: state ? 5 : 0,
+              right: state ? 5 : -3,
+              zIndex: 2,
+              backgroundColor: "white",
+              padding: 5,
+              borderWidth: 1,
+              borderRadius: "50%",
+              borderColor: colors.lightRed,
+            }}
+            onPress={getPermissionAndTakePicture}
+          >
+            <Icons.TakePhoto
+              size={state ? "XS" : "S"}
+              color={state ? colors.darkGrey : colors.lightGrey1}
+            />
+          </Pressable>
+
+          {state ? (
             <Image
-              source={{ uri: selectedPicture }}
+              source={{ uri: state }}
               style={{
                 height: 120,
                 width: 120,
@@ -104,23 +144,21 @@ export default function AvatarPicker() {
               }}
             ></Image>
           ) : (
-            <Icons.User color={colors.lightGrey2} />
+            <View
+              style={[
+                styles.containers.default,
+                {
+                  height: 120,
+                  width: 120,
+                  borderRadius: "50%",
+                  borderColor: colors.lightRed,
+                  borderWidth: 2,
+                },
+              ]}
+            >
+              <Icons.User color={colors.lightGrey2} />
+            </View>
           )}
-        </View>
-        <View
-          style={{
-            justifyContent: "space-around",
-            // padding: 20,
-            // borderWidth: 1,
-          }}
-        >
-          <Pressable onPress={getPermissionAndGetPicture}>
-            <Icons.Images size="S" color={colors.lightGrey1} />
-          </Pressable>
-
-          <Pressable onPress={getPermissionAndTakePicture}>
-            <Icons.TakePhoto size="S" color={colors.lightGrey1} />
-          </Pressable>
         </View>
       </View>
     </View>

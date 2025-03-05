@@ -13,11 +13,14 @@ export default function ShortTextInput({
   errorFields,
   setErrorFields,
   returnKeyType,
-  // refs,
-  // refIndex,
   onSubmitEditing,
   currentRef,
   nextRef,
+  style,
+  placeholderTextColor,
+  defaultValue,
+  onFocusBackgrounColor,
+  onBlurBackgrounColor,
 }) {
   const [showPassword, setShowpassword] = useState(!secureTextEntry);
 
@@ -34,21 +37,10 @@ export default function ShortTextInput({
         break;
       case "next":
         return nextRef ? nextRef.current?.focus() : null;
-      // // If there's still a ref, focus on it.
-      // if (refIndex && refs.length > Number(refIndex) + 1) {
-      //   refs[Number(refIndex) + 1].current?.focus();
-      // }
-      // // If it's the last reference, loop back to the first reference
-      // if (refIndex && refs.length === Number(refIndex) + 1) {
-      //   refs[0].current?.focus();
-      // }
-      // break;
-      default:
-        // Do nothing, i. e. blurAndSubmit
-        break;
     }
   }
 
+  const [backgroundColor, setBackgroundColor] = useState(null);
   return (
     <View
       style={[
@@ -57,10 +49,22 @@ export default function ShortTextInput({
       ]}
     >
       <TextInput
-        style={[styles.inputs.default]}
+        style={[
+          styles.inputs.default,
+          style,
+          { backgroundColor: backgroundColor },
+        ]}
         placeholder={placeholder}
+        placeholderTextColor={placeholderTextColor}
+        defaultValue={defaultValue || null}
         value={state}
         maxLength={50}
+        onFocus={() => {
+          setBackgroundColor(onFocusBackgrounColor);
+        }}
+        onBlur={() => {
+          setBackgroundColor(onBlurBackgrounColor);
+        }}
         onChange={(event) => {
           setState(event.nativeEvent.text);
           if (errorFields.indexOf(name) !== -1) {

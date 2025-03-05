@@ -10,10 +10,10 @@ export default function RootLayout() {
   const [userInfo, setUserInfo] = useState({});
   const [isConnected, setIsConnected] = useState(false);
 
-  async function login(newUserInfo) {
-    console.log("login:", newUserInfo);
-    await AsyncStorage.setItem("storedUserInfo", JSON.stringify(newUserInfo));
-    setUserInfo(newUserInfo);
+  async function login(userInfo) {
+    console.log("login:", userInfo);
+    await AsyncStorage.setItem("storedUserInfo", JSON.stringify(userInfo));
+    setUserInfo(userInfo);
     setIsConnected(true);
   }
 
@@ -24,11 +24,21 @@ export default function RootLayout() {
     setIsConnected(false);
   }
 
+  async function updateUserAsyncStorage(newUserInfo) {
+    console.log("Updating Async Storage user info to", newUserInfo);
+    let prevUserInfo = await JSON.parse(AsyncStorage.getItem("storedUserInfo"));
+    newUserInfo.token = prevUserInfo.token;
+    await AsyncStorage.setItem("storedUserInfo", JSON.stringify(newUserInfo));
+    setUserInfo(newUserInfo);
+    setIsConnected(true);
+  }
+
   useEffect(() => {
     async function getCurrentUserInfoFromAsyncStorage() {
+      console.log("getCurrentUserInfoFromAsyncStorage...");
       try {
         const storedUserInfo = await AsyncStorage.getItem("storedUserInfo");
-        // console.log("storedUserInfo is", storedUserInfo);
+        console.log("storedUserInfo is", storedUserInfo);
         if (storedUserInfo) {
           setUserInfo(JSON.parse(storedUserInfo));
           setIsConnected(true);
@@ -42,6 +52,7 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
+    console.log("Layout redirection (isConnected?)");
     if (isConnected) {
       router.replace("/main");
     } else {
@@ -54,8 +65,10 @@ export default function RootLayout() {
       value={{
         isConnected,
         userInfo,
+        setUserInfo,
         login,
         logout,
+        updateUserAsyncStorage,
       }}
     >
       <StatusBar barStyle="dark-content" />

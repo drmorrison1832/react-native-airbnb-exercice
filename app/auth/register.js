@@ -31,8 +31,6 @@ export default function Register() {
   const { login } = useContext(AuthContext);
 
   // Create input fields states and refs + refs array
-  const refsInOrder = [];
-
   const [email, setEmail] = useState("");
   const emailRef = useRef(null);
 
@@ -47,6 +45,8 @@ export default function Register() {
 
   const [confirmPassword, setConfirmPassword] = useState("");
   const confirmPasswordRef = useRef(null);
+
+  const [selectedPicture, setSelectedPicture] = useState(null);
 
   const submitButtonRef = useRef(null);
 
@@ -83,7 +83,7 @@ export default function Register() {
     const body = {
       email,
       username,
-      description,
+      description: description.trim(),
       password,
     };
 
@@ -134,7 +134,7 @@ export default function Register() {
           <ScreenTitle title="Register" />
         </View>
         <View style={[styles.containers.default, { marginTop: 20 }]}>
-          <AvatarPicker />
+          <AvatarPicker state={selectedPicture} setState={setSelectedPicture} />
         </View>
         <ShortTextInput
           currentRef={emailRef}
@@ -217,6 +217,7 @@ export default function Register() {
             currentRef={submitButtonRef}
             text="Register"
             onPress={handleSubmit}
+            disabled={isLoading || errorFields.length > 0}
           />
           <View style={styles.containers.inLineDefault}>
             <NavText screen="/auth/login" text="Already have an account? " />

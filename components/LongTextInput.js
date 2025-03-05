@@ -4,12 +4,13 @@ import styles from "../assets/styles/styles";
 
 export default function LongTextInput({
   placeholder,
+  placeholderTextColor,
   state,
   setState,
   name,
   errorFields,
   setErrorFields,
-  refs,
+  currentRef,
   refIndex,
 }) {
   return (
@@ -20,6 +21,7 @@ export default function LongTextInput({
           errorFields.includes(name) && styles.containers.errorInputContainer,
         ]}
         placeholder={placeholder}
+        placeholderTextColor={placeholderTextColor}
         value={state}
         onChange={(event) => {
           setState(event.nativeEvent.text);
@@ -32,7 +34,7 @@ export default function LongTextInput({
         }}
         multiline
         maxLength={250}
-        ref={refs?.[refIndex] || null}
+        ref={currentRef || null}
       />
     </View>
   );
