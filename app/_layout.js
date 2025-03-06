@@ -25,7 +25,8 @@ export default function RootLayout() {
   }
 
   async function updateUserAsyncStorage(newUserInfo) {
-    console.log("Updating Async Storage user info to", newUserInfo);
+    // console.log("Updating Async Storage user info to", newUserInfo);
+    console.log("Updating Async Storage user info");
     let prevUserInfo = await JSON.parse(AsyncStorage.getItem("storedUserInfo"));
     newUserInfo.token = prevUserInfo.token;
     await AsyncStorage.setItem("storedUserInfo", JSON.stringify(newUserInfo));

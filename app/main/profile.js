@@ -79,7 +79,7 @@ export default function Profile() {
           };
 
           const response = await axios.get(URL, config);
-          console.log("response.data is", response.data);
+          // console.log("response.data is", response.data);
 
           updateUserAsyncStorage(response.data);
           updateRetrievedStates(response.data);
@@ -156,15 +156,17 @@ export default function Profile() {
       );
 
       console.log("Updating local user info...");
-      console.log(responseUserInfo.data);
+      // console.log(responseUserInfo.data);
       updateUserAsyncStorage(responseUserInfo.data);
       updateRetrievedStates(responseUserInfo.data);
       updateInputStates(responseUserInfo.data);
 
       setIsLoading(false);
     } catch (error) {
-      // HAVEN'T TESTED THIS
-      console.log(error?.response?.data?.error);
+      // console.error(error?.response?.data?.error);
+      console.log(Object.keys(error));
+      // console.error(error?.response?.data?.message);
+      console.error(error);
 
       error?.response?.data?.error.includes("email") &&
         newErrorFields.push("email");

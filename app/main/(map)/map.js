@@ -7,12 +7,15 @@ import * as Location from "expo-location";
 import axios from "axios";
 
 import styles from "../../../assets/styles/styles";
-import colors from "../../../assets/styles/colors";
 
-import Icon from "../../../components/Icons";
+import { Icons, MapMarker } from "../../../components/Index";
 
 export default function ArroundMe() {
   console.log("Rendering ArroundMe");
+  console.log(
+    "type of MapView.animateToRegion is",
+    typeof MapView.animateToRegion
+  );
 
   const [sourroundingRooms, setSourroundingRooms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,24 +24,27 @@ export default function ArroundMe() {
   // Default position (Paris)
   const [latitude, setLatitude] = useState(48.866667);
   const [longitude, setLongitude] = useState(2.3333);
+  const [latitudeDelta, setLatitudeDelta] = useState(0.025);
+  const [longitudeDelta, setLongitudeDelta] = useState(0.025);
+  const [userCoordinates, setUserCoordinates] = useState(null);
 
   useEffect(() => {
-    async function askLocationPermission() {
+    async function askLocationPermissionAndUpdateCoordinates() {
       console.log("askLocationPermission...");
       try {
         let { status } = await Location.requestForegroundPermissionsAsync();
 
         if (status === "granted") {
           let location = await Location.getCurrentPositionAsync({});
-          console.log("location =>", location); // console.log permettant de visualiser l'objet obtenu
           setLatitude(location.coords.latitude);
           setLongitude(location.coords.longitude);
+          setUserCoordinates(location.coords);
         }
       } catch (error) {
         console.error(error?.message);
       }
     }
-    askLocationPermission();
+    askLocationPermissionAndUpdateCoordinates();
   }, []);
 
   useEffect(() => {
@@ -79,19 +85,23 @@ export default function ArroundMe() {
     );
   }
 
+  console.log("Rendering to coordinates", { latitude, longitude });
   return (
     <MapView
       style={{ flex: 1 }}
-      initialRegion={{
+      region={{
         latitude: latitude,
         longitude: longitude,
-        latitudeDelta: 0.025,
-        longitudeDelta: 0.025,
+        latitudeDelta: latitudeDelta,
+        longitudeDelta: longitudeDelta,
       }}
       showsUserLocation={true}
       onRegionChangeComplete={(coordinates) => {
         setLatitude(coordinates.latitude);
         setLongitude(coordinates.longitude);
+        setLongitudeDelta(coordinates.longitudeDelta);
+        setLatitudeDelta(coordinates.latitudeDelta);
+        console.log("New coordinates set to", coordinates);
       }}
     >
       {sourroundingRooms.map((room) => {
@@ -111,23 +121,27 @@ export default function ArroundMe() {
               });
             }}
           >
-            <View
-              style={{
-                backgroundColor: colors.mainRed,
-                borderColor: "white",
-                borderWidth: 2,
-                borderRadius: "50%",
-                height: 40,
-                width: 40,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Icon.Airbnb size="S" color={"white"} />
-            </View>
+            <MapMarker />
           </Marker>
         );
       })}
+      <Pressable
+        style={{ position: "absolute", bottom: 10, right: 10 }}
+        onPress={() => {
+          console.log(
+            "Setting coordinates to",
+            userCoordinates.latitude,
+            userCoordinates.longitude
+          );
+
+          setLatitude(userCoordinates.latitude);
+          setLongitude(userCoordinates.longitude);
+          setLongitudeDelta(0.025);
+          setLatitudeDelta(0.025);
+        }}
+      >
+        <Icons.MyLocation size="S" />
+      </Pressable>
     </MapView>
   );
 }

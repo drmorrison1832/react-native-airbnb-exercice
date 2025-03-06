@@ -1,22 +1,12 @@
 import { View, Text, Image, Pressable } from "react-native";
-import { useState } from "react";
 
 import * as ImagePicker from "expo-image-picker";
 
 import styles from "../assets/styles/styles";
 import colors from "../assets/styles/colors";
-import {
-  Icons,
-  ScreenTitle,
-  ShortTextInput,
-  LongTextInput,
-  NavText,
-  DefaultButton,
-} from "../components/Index";
+import { Icons } from "../components/Index";
 
 export default function AvatarPicker({ state, setState, currentPhotoURL }) {
-  // const [state, setState] = useState(null);
-
   async function getPermissionAndGetPicture() {
     console.log("Accessing library...");
     try {
@@ -28,7 +18,7 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
           allowsEditing: true,
           aspect: [1, 1],
         });
-        console.log("ImagePicker.launchImageLibraryAsync result is", result);
+        // console.log("ImagePicker.launchImageLibraryAsync result is", result);
         if (result.canceled === true) {
         } else {
           // console.log("result is", result);
@@ -38,8 +28,8 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
             mimeType: result.assets[0].mimeType,
             name: "my-pic." + result.assets[0].fileName.split(".").pop(),
           };
-          // console.log("newPhoto", newPhoto);
 
+          console.log("uri is", result.assets[0].uri);
           setState(newPhoto);
         }
       }
@@ -58,11 +48,11 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
           cameraType: "front",
           allowsEditing: true,
         });
-        console.log("ImagePicker.launchCameraAsync result is", result);
+        // console.log("ImagePicker.launchCameraAsync result is", result);
         if (result.canceled === true) {
           return;
         } else {
-          console.log("result is", result);
+          console.log("uri is", result.assets[0].uri);
           setState(result.assets[0].uri);
         }
       }
@@ -117,10 +107,7 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
             }}
             onPress={getPermissionAndGetPicture}
           >
-            <Icons.Images
-              size={state ? "XS" : "S"}
-              color={state ? colors.darkGrey : colors.lightGrey1}
-            />
+            <Icons.Images size={state ? "XS" : "S"} color={colors.lightGrey1} />
           </Pressable>
           <Pressable
             style={{
@@ -138,7 +125,7 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
           >
             <Icons.TakePhoto
               size={state ? "XS" : "S"}
-              color={state ? colors.darkGrey : colors.lightGrey1}
+              color={colors.lightGrey1}
             />
           </Pressable>
 
@@ -152,7 +139,7 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
                 borderColor: colors.lightRed,
                 borderWidth: 2,
               }}
-            ></Image>
+            />
           ) : currentPhotoURL ? (
             <Image
               source={{ uri: currentPhotoURL }}
@@ -163,7 +150,7 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
                 borderColor: colors.lightRed,
                 borderWidth: 2,
               }}
-            ></Image>
+            />
           ) : (
             <View
               style={[

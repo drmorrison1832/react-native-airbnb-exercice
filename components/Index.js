@@ -12,20 +12,22 @@ import RoomMap from "./RoomMap";
 import RoomPicturesSwiper from "./RoomPicturesSwiper";
 import ShowRoom from "./ShowRoom";
 import AvatarPicker from "./AvatarPicker";
+import MapMarker from "./MapMarker";
 
 export {
-  Icons,
-  ScreenTitle,
-  ShortTextInput,
-  LongTextInput,
-  NavText,
+  AvatarPicker,
   DefaultButton,
+  Icons,
+  LongTextInput,
+  MapMarker,
+  NavText,
   Rating,
   RoomHeader,
   RoomShowcasePicture,
   RoomDescription,
   RoomMap,
   RoomPicturesSwiper,
+  ScreenTitle,
+  ShortTextInput,
   ShowRoom,
-  AvatarPicker,
 };
