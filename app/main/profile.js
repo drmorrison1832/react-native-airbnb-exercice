@@ -2,7 +2,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Text, View, ActivityIndicator, Image } from "react-native";
 import { useContext, useState, useEffect, useRef, useCallback } from "react";
 import AuthContext from "../../context/AuthContext";
-import { router, Redirect } from "expo-router";
+import { router } from "expo-router";
 import { useFocusEffect } from "expo-router";
 
 import axios from "axios";
@@ -106,7 +106,7 @@ export default function Profile() {
     setErrorFields([]);
     setErrorMessage("");
 
-    // If any field is empty, push it to array
+    // If a field is empty, push it to array
     email || newErrorFields.push("email");
     username || newErrorFields.push("username");
     description || newErrorFields.push("description");
@@ -129,6 +129,8 @@ export default function Profile() {
         const formData = new FormData();
 
         formData.append("photo", newPhoto);
+
+        console.log("formData is", formData);
 
         const configUserPhoto = {
           headers: { Authorization: "Bearer " + userInfo.token },
@@ -163,9 +165,6 @@ export default function Profile() {
 
       setIsLoading(false);
     } catch (error) {
-      // console.error(error?.response?.data?.error);
-      console.log(Object.keys(error));
-      // console.error(error?.response?.data?.message);
       console.error(error);
 
       error?.response?.data?.error.includes("email") &&

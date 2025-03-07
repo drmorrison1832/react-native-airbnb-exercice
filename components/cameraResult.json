@@ -1,0 +1,19 @@
+{
+  "assets": [
+    {
+      "assetId": null,
+      "base64": null,
+      "duration": null,
+      "exif": null,
+      "fileName": null,
+      "fileSize": 3451860,
+      "height": 2290,
+      "mimeType": "image/jpeg",
+      "pairedVideoAsset": null,
+      "type": "image",
+      "uri": "file:///var/mobile/Containers/Data/Application/8CBA1F84-E9E9-4E3B-8B40-7C5E6AEA4F53/Library/Caches/ExponentExperienceData/@anonymous/airBnb-app-fae8068a-cd51-47a7-8aa7-d51f389043f9/ImagePicker/6D49A60B-EBCB-47D5-8675-CFD1918CE891.jpg",
+      "width": 2316
+    }
+  ],
+  "canceled": false
+}

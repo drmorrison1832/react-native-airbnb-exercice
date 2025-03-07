@@ -7,6 +7,8 @@ import colors from "../assets/styles/colors";
 import { Icons } from "../components/Index";
 
 export default function AvatarPicker({ state, setState, currentPhotoURL }) {
+  console.log("Avatar Picker");
+
   async function getPermissionAndGetPicture() {
     console.log("Accessing library...");
     try {
@@ -18,7 +20,7 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
           allowsEditing: true,
           aspect: [1, 1],
         });
-        // console.log("ImagePicker.launchImageLibraryAsync result is", result);
+        console.log("ImagePicker.launchImageLibraryAsync result is", result);
         if (result.canceled === true) {
         } else {
           // console.log("result is", result);
@@ -29,7 +31,7 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
             name: "my-pic." + result.assets[0].fileName.split(".").pop(),
           };
 
-          console.log("uri is", result.assets[0].uri);
+          // console.log("uri is", result.assets[0].uri);
           setState(newPhoto);
         }
       }
@@ -48,18 +50,28 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
           cameraType: "front",
           allowsEditing: true,
         });
-        // console.log("ImagePicker.launchCameraAsync result is", result);
+        console.log("ImagePicker.launchCameraAsync result is", result);
         if (result.canceled === true) {
           return;
         } else {
-          console.log("uri is", result.assets[0].uri);
-          setState(result.assets[0].uri);
+          console.log("result is", result);
+          console.log("mime type is", result.assets[0].mimeType);
+          let newPhoto = {
+            uri: result.assets[0].uri,
+            mimeType: result.assets[0].mimeType,
+            name: "my-pic." + result.assets[0].uri.split(".").pop(),
+          };
+
+          // console.log("uri is", result.assets[0].uri);
+          setState(newPhoto);
         }
       }
     } catch (error) {
       console.error(error?.message);
     }
   }
+
+  console.log("state is", state);
 
   return (
     <View style={styles.containers.default}>
