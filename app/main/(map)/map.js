@@ -105,9 +105,9 @@ export default function ArroundMe() {
             title={room.title}
             description={room.description}
             onPress={() => {
-              router.navigate({
+              router.push({
                 pathname: "./room-from-map",
-                params: { roomID: room._id },
+                params: { roomID: room._id, comingFrom: "map" },
               });
             }}
           >

@@ -25,6 +25,19 @@ export default function MainLayout() {
               <Icons.Back size={25} color={colors.darkGrey} />
             </Pressable>
           ) : null;
+
+          // return currentScreen === "/main/room" ? (
+          //   <Pressable
+          //     onPress={() => {
+          //       comingFrom === "map"
+          //         ? router.replace("../(map/map")
+          //         : router.back();
+          //     }}
+          //     style={{ marginLeft: "5" }}
+          //   >
+          //     <Icons.Back size={25} color={colors.darkGrey} />
+          //   </Pressable>
+          // ) : null;
         },
 
         headerTitle: (props) => {
