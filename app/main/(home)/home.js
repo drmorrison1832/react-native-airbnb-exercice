@@ -10,8 +10,6 @@ import { RoomHeader, RoomShowcasePicture } from "../../../components/Index";
 import styles from "../../../assets/styles/styles";
 
 export default function Home() {
-  console.log("Rendering Home");
-
   const [roomsData, setRoomsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(true);
@@ -19,7 +17,6 @@ export default function Home() {
   useEffect(() => {
     setError(null);
     async function retrieveRoomsData() {
-      console.log("Retrieving rooms data...");
       const URL =
         "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms";
       try {
@@ -72,7 +69,7 @@ export default function Home() {
                 },
               ]}
             >
-              <View style={[styles.containers.flatListRoomContainer]}>
+              <View>
                 <RoomShowcasePicture
                   URI={item.photos[0].url}
                   height="200"

@@ -19,8 +19,6 @@ import AuthContext from "../../context/AuthContext";
 import colors from "../../assets/styles/colors";
 
 export default function Register() {
-  console.log("Rendering Register");
-
   const { login } = useContext(AuthContext);
 
   // States for input fields
@@ -31,7 +29,7 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
-  // refs for inputs so RETURN key jumps to next field)
+  // Refs for inputs so "return" key jumps to next field
   const emailRef = useRef(null);
   const usernameRef = useRef(null);
   const descriptionRef = useRef(null);
@@ -48,7 +46,7 @@ export default function Register() {
     const newErrorFields = [];
     setErrorMessage("");
 
-    // If any field is empty, push it to array
+    // If any field is empty, push its name to errorFields array
     email || newErrorFields.push("email");
     username || newErrorFields.push("username");
     description || newErrorFields.push("description");

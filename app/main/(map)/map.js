@@ -11,12 +11,6 @@ import styles from "../../../assets/styles/styles";
 import { Icons, MapMarker } from "../../../components/Index";
 
 export default function ArroundMe() {
-  console.log("Rendering ArroundMe");
-  console.log(
-    "type of MapView.animateToRegion is",
-    typeof MapView.animateToRegion
-  );
-
   const [sourroundingRooms, setSourroundingRooms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(true);
@@ -29,8 +23,7 @@ export default function ArroundMe() {
   const [userCoordinates, setUserCoordinates] = useState(null);
 
   useEffect(() => {
-    async function askLocationPermissionAndUpdateCoordinates() {
-      console.log("askLocationPermission...");
+    async function requestLocationPermissionAndUpdateCoordinates() {
       try {
         let { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -44,14 +37,12 @@ export default function ArroundMe() {
         console.error(error?.message);
       }
     }
-    askLocationPermissionAndUpdateCoordinates();
+    requestLocationPermissionAndUpdateCoordinates();
   }, []);
 
   useEffect(() => {
     setError(null);
     async function retrieveSourroundingRooms() {
-      console.log("Retrieving sourrounding rooms data...");
-
       const query = `?latitude=${latitude}&longitude=${longitude}`;
       const URL =
         "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms/around" +
@@ -85,7 +76,6 @@ export default function ArroundMe() {
     );
   }
 
-  console.log("Rendering to coordinates", { latitude, longitude });
   return (
     <MapView
       style={{ flex: 1 }}
@@ -101,7 +91,6 @@ export default function ArroundMe() {
         setLongitude(coordinates.longitude);
         setLongitudeDelta(coordinates.longitudeDelta);
         setLatitudeDelta(coordinates.latitudeDelta);
-        console.log("New coordinates set to", coordinates);
       }}
     >
       {sourroundingRooms.map((room) => {
@@ -128,12 +117,6 @@ export default function ArroundMe() {
       <Pressable
         style={{ position: "absolute", bottom: 10, right: 10 }}
         onPress={() => {
-          console.log(
-            "Setting coordinates to",
-            userCoordinates.latitude,
-            userCoordinates.longitude
-          );
-
           setLatitude(userCoordinates.latitude);
           setLongitude(userCoordinates.longitude);
           setLongitudeDelta(0.025);

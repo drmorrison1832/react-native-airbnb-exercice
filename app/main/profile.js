@@ -18,7 +18,6 @@ import {
 import colors from "../../assets/styles/colors";
 
 export default function Profile() {
-  console.log("Rendering Profile");
   const { userInfo, logout, updateUserAsyncStorage, isConnected } =
     useContext(AuthContext);
 
@@ -26,10 +25,11 @@ export default function Profile() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
-  const [currentPhotoURL, setcurrentPhotoURL] = useState(
-    userInfo?.photo?.url || null
-  );
   const [newPhoto, setNewPhoto] = useState(null);
+
+  // Photo to show when mounting this screen.
+  //
+  const currentPhotoURL = userInfo?.photo?.url || null;
 
   // refs for inputs so RETURN key jumps to next field)
   const emailRef = useRef(null);
@@ -43,7 +43,6 @@ export default function Profile() {
   const [retrievedDescription, setRetrievedDescription] = useState("");
 
   function updateRetrievedStates(data) {
-    // Reference needed to know if inputs changed
     data?.email && setRetrievedEmail(data.email);
     data?.username && setRetrievedUsername(data.username);
     data?.description && setRetrievedDescription(data.description);
@@ -79,26 +78,24 @@ export default function Profile() {
           };
 
           const response = await axios.get(URL, config);
-          // console.log("response.data is", response.data);
 
-          updateUserAsyncStorage(response.data);
-          updateRetrievedStates(response.data);
           updateInputStates(response.data);
-
-          setIsLoading(false);
+          updateRetrievedStates(response.data);
+          await updateUserAsyncStorage(response.data);
         } catch (error) {
+          console.error(error);
           setErrorMessage(error?.response?.data?.error || error.message);
-          setIsLoading(false);
         }
+        setIsLoading(false);
       }
       getUserDataAndUpdateLocalStorage();
 
       return () => {
-        // Errors are reinitialized when switching to another tab
+        // Errors are reinitialized when switching to another screen
         setErrorFields([]);
         setErrorMessage("");
       };
-    }, [])
+    }, [retrievedEmail, retrievedUsername, retrievedDescription])
   );
 
   async function handleSubmit() {
@@ -106,7 +103,7 @@ export default function Profile() {
     setErrorFields([]);
     setErrorMessage("");
 
-    // If a field is empty, push it to array
+    // If a field is empty, push its name to ErrorFields array
     email || newErrorFields.push("email");
     username || newErrorFields.push("username");
     description || newErrorFields.push("description");
@@ -119,77 +116,91 @@ export default function Profile() {
 
     setIsLoading(true);
 
-    try {
-      if (newPhoto) {
-        console.log("Uploading new photo...");
-
-        const URLUserPhoto =
+    if (newPhoto) {
+      // Upload newPhoto
+      try {
+        const uploadPhotoURL =
           "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/upload_picture";
 
         const formData = new FormData();
 
         formData.append("photo", newPhoto);
 
-        console.log("formData is", formData);
-
         const configUserPhoto = {
           headers: { Authorization: "Bearer " + userInfo.token },
           "Content-Type": "multipart/form-data",
         };
+        const response = await axios.put(
+          uploadPhotoURL,
+          formData,
+          configUserPhoto
+        );
 
-        await axios.put(URLUserPhoto, formData, configUserPhoto);
+        updateInputStates(response.data);
+        updateRetrievedStates(response.data);
+        await updateUserAsyncStorage(response.data);
+
+        setNewPhoto(null);
+      } catch (error) {
+        console.error(error);
+        setErrorMessage("Error updating photo");
       }
-
-      console.log("Uploading user info...");
-
-      const URLUserInfo =
-        "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/update";
-
-      const bodyUserInfo = { email, username, description: description.trim() };
-
-      const configUserInfo = {
-        headers: { Authorization: "Bearer " + userInfo.token },
-      };
-
-      const responseUserInfo = await axios.put(
-        URLUserInfo,
-        bodyUserInfo,
-        configUserInfo
-      );
-
-      console.log("Updating local user info...");
-      // console.log(responseUserInfo.data);
-      updateUserAsyncStorage(responseUserInfo.data);
-      updateRetrievedStates(responseUserInfo.data);
-      updateInputStates(responseUserInfo.data);
-
-      setIsLoading(false);
-    } catch (error) {
-      console.error(error);
-
-      error?.response?.data?.error.includes("email") &&
-        newErrorFields.push("email");
-      error?.response?.data?.error.includes("username") &&
-        newErrorFields.push("username");
-      error?.response?.data?.error.includes("description") &&
-        newErrorFields.push("description");
-      error?.response?.data?.error.includes("password") &&
-        newErrorFields.push("password", "confirmPassword");
-
-      if (newErrorFields.length === 0) {
-        setErrorMessage("Something went wrong");
-      } else {
-        setErrorFields(newErrorFields);
-        setErrorMessage(error?.response?.data?.error);
-      }
-
-      setIsLoading(false);
-      return;
     }
+
+    if (
+      retrievedDescription !== description ||
+      (retrievedEmail !== email) | (retrievedUsername === username)
+    ) {
+      // Upload updated user info
+      try {
+        const updateInfoURL =
+          "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/update";
+
+        const bodyUserInfo = {
+          email,
+          username,
+          description: description.trim(),
+        };
+
+        const configUserInfo = {
+          headers: { Authorization: "Bearer " + userInfo.token },
+        };
+
+        const response = await axios.put(
+          updateInfoURL,
+          bodyUserInfo,
+          configUserInfo
+        );
+        updateInputStates(response.data);
+        updateRetrievedStates(response.data);
+        await updateUserAsyncStorage(response.data);
+      } catch (error) {
+        console.error(error);
+
+        // If server gives a specific error message, hightlight input field
+        error?.response?.data?.error.includes("email") &&
+          newErrorFields.push("email");
+        error?.response?.data?.error.includes("username") &&
+          newErrorFields.push("username");
+        error?.response?.data?.error.includes("description") &&
+          newErrorFields.push("description");
+        error?.response?.data?.error.includes("password") &&
+          newErrorFields.push("password", "confirmPassword");
+
+        if (newErrorFields.length !== 0) {
+          setErrorFields(newErrorFields);
+          setErrorMessage(
+            `Error updating info. ${error?.response?.data?.error || null}`
+          );
+        }
+      }
+    }
+
+    setIsLoading(false);
+    return;
   }
 
   if (!isConnected) {
-    // return <Redirect href="../auth" />;
     return (
       <View style={[styles.containers.fullScreen]}>
         <DefaultButton
@@ -231,7 +242,7 @@ export default function Profile() {
           <AvatarPicker
             state={newPhoto}
             setState={setNewPhoto}
-            currentPhotoURL={currentPhotoURL}
+            currentPhotoURL={userInfo?.photo?.url}
           />
         </View>
         <ShortTextInput
@@ -282,7 +293,6 @@ export default function Profile() {
             text="Update info"
             currentRef={submitButtonRef}
             onPress={handleSubmit}
-            // If any field changed or if user choses a new photo, then submitting is enabled
             disabled={
               isLoading ||
               (retrievedDescription === description &&

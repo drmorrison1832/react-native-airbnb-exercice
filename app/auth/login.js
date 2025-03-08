@@ -24,15 +24,13 @@ import colors from "../../assets/styles/colors";
 import styles from "../../assets/styles/styles";
 
 export default function Login() {
-  console.log("Rendering Login");
-
   const { login } = useContext(AuthContext);
 
   // States for input fields
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // refs for inputs so RETURN key jumps to next field)
+  // Refs for inputs so "return" key jumps to next field
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const submitButtonRef = useRef(null);
@@ -43,8 +41,6 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit() {
-    console.log("handleSubmit...");
-
     const newErrorFields = [];
     setErrorMessage("");
 

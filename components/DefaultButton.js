@@ -1,25 +1,11 @@
-import {
-  TouchableHighlight,
-  TouchableOpacity,
-  Pressable,
-  Text,
-  StyleSheet,
-} from "react-native";
+import { Pressable, Text } from "react-native";
 import colors from "../assets/styles/colors";
 import styles from "../assets/styles/styles";
 
-export default function ({
-  text,
-  onPress,
-  disabled,
-  // refs,
-  // refIndex,
-  currentRef,
-}) {
+export default function ({ text, onPress, disabled, currentRef }) {
   return (
     <>
       <Pressable
-        // ref={refs?.[refIndex]}
         ref={currentRef || null}
         activeOpacity={1}
         underlayColor={colors.lightRed}

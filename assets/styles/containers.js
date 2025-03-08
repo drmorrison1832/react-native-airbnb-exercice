@@ -8,14 +8,9 @@ export default StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: "center",
     justifyContent: "center",
-
-    // borderColor: "blue",
-    // borderWidth: 1,
   },
 
   default: {
-    // flex: 1,
-    // backgroundColor: "#fff",
     alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "center",
@@ -23,21 +18,11 @@ export default StyleSheet.create({
 
   inLineDefault: {
     flexDirection: "row",
-    // alignItems: "center",
-    // justifyContent: "space-between",
-    // borderColor: "pink",
-    // borderWidth: 1,
     overflow: "hidden",
   },
 
   // ROOMS FLAT LIST
-
   flatList: { width: "100%", paddingHorizontal: 20, paddingTop: 20 },
-
-  flatListRoomContainer: {
-    // borderColor: "red",
-    // borderWidth: 1,
-  },
 
   priceContainer: {
     width: 100,
@@ -57,7 +42,6 @@ export default StyleSheet.create({
   flatListRoomTextContainer: {
     flexGrow: 0,
     flexShrink: 1,
-    // borderWidth: 2,
     justifyContent: "space-evenly",
   },
 
@@ -72,13 +56,11 @@ export default StyleSheet.create({
   },
 
   // ROOM
-
   shortTextInputContainer: {
     alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "center",
     borderBottomWidth: 2,
-    // borderColor: "blue",
     borderColor: colors.lightRed,
     flexDirection: "row",
   },
@@ -94,6 +76,3 @@ export default StyleSheet.create({
 
   errorInputContainer: { backgroundColor: "mistyrose" },
 });
-
-// borderColor: "blue",
-//     borderWidth: 1,

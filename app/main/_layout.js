@@ -5,8 +5,6 @@ import Icons from "../../components/Icons";
 import colors from "../../assets/styles/colors";
 
 export default function MainLayout() {
-  console.log("Rendering MainLayout");
-
   const currentScreen = usePathname();
 
   return (

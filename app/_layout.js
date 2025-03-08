@@ -6,29 +6,26 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthProvider from "../context/AuthProvider";
 
 export default function RootLayout() {
-  console.log("Rendering RootLayout");
   const [userInfo, setUserInfo] = useState({});
   const [isConnected, setIsConnected] = useState(false);
 
+  // Declare authentification functions: logging in, logging out and updating local storage
   async function login(userInfo) {
-    console.log("login:", userInfo);
     await AsyncStorage.setItem("storedUserInfo", JSON.stringify(userInfo));
     setUserInfo(userInfo);
     setIsConnected(true);
   }
 
   async function logout() {
-    console.log("logout");
     await AsyncStorage.removeItem("storedUserInfo");
     setUserInfo(null);
     setIsConnected(false);
   }
 
   async function updateUserAsyncStorage(newUserInfo) {
-    // console.log("Updating Async Storage user info to", newUserInfo);
-    console.log("Updating Async Storage user info");
-    let prevUserInfo = await JSON.parse(AsyncStorage.getItem("storedUserInfo"));
-    newUserInfo.token = prevUserInfo.token;
+    const prevUserInfo = await AsyncStorage.getItem("storedUserInfo");
+    const parsedPrevUserInfo = JSON.parse(prevUserInfo);
+    newUserInfo.token = parsedPrevUserInfo.token;
     await AsyncStorage.setItem("storedUserInfo", JSON.stringify(newUserInfo));
     setUserInfo(newUserInfo);
     setIsConnected(true);
@@ -36,16 +33,15 @@ export default function RootLayout() {
 
   useEffect(() => {
     async function getCurrentUserInfoFromAsyncStorage() {
-      console.log("getCurrentUserInfoFromAsyncStorage...");
       try {
         const storedUserInfo = await AsyncStorage.getItem("storedUserInfo");
-        console.log("storedUserInfo is", storedUserInfo);
+
         if (storedUserInfo) {
           setUserInfo(JSON.parse(storedUserInfo));
           setIsConnected(true);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         alert("Something went wrong");
       }
     }
@@ -53,7 +49,6 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    console.log("Layout redirection (isConnected?)");
     if (isConnected) {
       router.replace("/main");
     } else {

@@ -4,34 +4,26 @@ import * as ImagePicker from "expo-image-picker";
 
 import styles from "../assets/styles/styles";
 import colors from "../assets/styles/colors";
-import { Icons } from "../components/Index";
+import Icons from "./Icons";
 
 export default function AvatarPicker({ state, setState, currentPhotoURL }) {
-  console.log("Avatar Picker");
-
   async function getPermissionAndGetPicture() {
-    console.log("Accessing library...");
     try {
       const { status } =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status === "granted") {
-        console.log("Persmission granted");
         const result = await ImagePicker.launchImageLibraryAsync({
           allowsEditing: true,
           aspect: [1, 1],
         });
-        console.log("ImagePicker.launchImageLibraryAsync result is", result);
         if (result.canceled === true) {
         } else {
-          // console.log("result is", result);
-          // console.log("mime type is", result.assets[0].mimeType);
           let newPhoto = {
             uri: result.assets[0].uri,
             mimeType: result.assets[0].mimeType,
             name: "my-pic." + result.assets[0].fileName.split(".").pop(),
           };
 
-          // console.log("uri is", result.assets[0].uri);
           setState(newPhoto);
         }
       }
@@ -41,28 +33,22 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
   }
 
   async function getPermissionAndTakePicture() {
-    console.log("Accessing camera...");
     try {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
       if (status === "granted") {
-        console.log("Persmission granted");
         const result = await ImagePicker.launchCameraAsync({
           cameraType: "front",
           allowsEditing: true,
         });
-        console.log("ImagePicker.launchCameraAsync result is", result);
         if (result.canceled === true) {
           return;
         } else {
-          console.log("result is", result);
-          console.log("mime type is", result.assets[0].mimeType);
           let newPhoto = {
             uri: result.assets[0].uri,
             mimeType: result.assets[0].mimeType,
             name: "my-pic." + result.assets[0].uri.split(".").pop(),
           };
 
-          // console.log("uri is", result.assets[0].uri);
           setState(newPhoto);
         }
       }
@@ -70,8 +56,6 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
       console.error(error?.message);
     }
   }
-
-  console.log("state is", state);
 
   return (
     <View style={styles.containers.default}>
@@ -82,29 +66,32 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
             width: 120,
             justifyContent: "center",
             alignItems: "center",
-            // overflow: "hidden",
           }}
         >
-          {state && (
-            <Pressable
-              style={{
-                position: "absolute",
-                top: 7,
-                right: 7,
-                zIndex: 2,
-                backgroundColor: "white",
-                padding: 5,
-                borderWidth: 1,
-                borderRadius: "50%",
-                borderColor: colors.lightRed,
-              }}
-              onPress={() => {
-                setState(null);
-              }}
-            >
-              <Icons.Trash color={colors.lightGrey1} size="XS" />
-            </Pressable>
-          )}
+          {
+            // Show trash icon only if user picked a newPhoto.
+
+            state && (
+              <Pressable
+                style={{
+                  position: "absolute",
+                  top: 7,
+                  right: 7,
+                  zIndex: 2,
+                  backgroundColor: "white",
+                  padding: 5,
+                  borderWidth: 1,
+                  borderRadius: "50%",
+                  borderColor: colors.lightRed,
+                }}
+                onPress={() => {
+                  setState(null);
+                }}
+              >
+                <Icons.Trash color={colors.lightGrey1} size="XS" />
+              </Pressable>
+            )
+          }
           <Pressable
             style={{
               position: "absolute",
@@ -141,44 +128,48 @@ export default function AvatarPicker({ state, setState, currentPhotoURL }) {
             />
           </Pressable>
 
-          {state ? (
-            <Image
-              source={{ uri: state.uri }}
-              style={{
-                height: 120,
-                width: 120,
-                borderRadius: "50%",
-                borderColor: colors.lightRed,
-                borderWidth: 2,
-              }}
-            />
-          ) : currentPhotoURL ? (
-            <Image
-              source={{ uri: currentPhotoURL }}
-              style={{
-                height: 120,
-                width: 120,
-                borderRadius: "50%",
-                borderColor: colors.lightRed,
-                borderWidth: 2,
-              }}
-            />
-          ) : (
-            <View
-              style={[
-                styles.containers.default,
-                {
+          {
+            // Picture shown fall-trhough: newPhoto, currentPhoto, default Icon
+
+            state ? (
+              <Image
+                source={{ uri: state.uri }}
+                style={{
                   height: 120,
                   width: 120,
                   borderRadius: "50%",
                   borderColor: colors.lightRed,
                   borderWidth: 2,
-                },
-              ]}
-            >
-              <Icons.User color={colors.lightGrey2} />
-            </View>
-          )}
+                }}
+              />
+            ) : currentPhotoURL ? (
+              <Image
+                source={{ uri: currentPhotoURL }}
+                style={{
+                  height: 120,
+                  width: 120,
+                  borderRadius: "50%",
+                  borderColor: colors.lightRed,
+                  borderWidth: 2,
+                }}
+              />
+            ) : (
+              <View
+                style={[
+                  styles.containers.default,
+                  {
+                    height: 120,
+                    width: 120,
+                    borderRadius: "50%",
+                    borderColor: colors.lightRed,
+                    borderWidth: 2,
+                  },
+                ]}
+              >
+                <Icons.User color={colors.lightGrey2} />
+              </View>
+            )
+          }
         </View>
       </View>
     </View>

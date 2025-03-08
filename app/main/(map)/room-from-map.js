@@ -1,43 +1,24 @@
-import {
-  View,
-  Text,
-  // SafeAreaView,
-  // FlatList,
-  // Pressable,
-  // ScrollView,
-} from "react-native";
+import { View, Text } from "react-native";
 import { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 
 import axios from "axios";
 
-import {
-  // RoomHeader,
-  // RoomShowcasePicture,
-  // RoomDescription,
-  // RoomMap,
-  ShowRoom,
-} from "../../../components/Index";
+import { ShowRoom } from "../../../components/Index";
 
 import styles from "../../../assets/styles/styles";
-import colors from "../../../assets/styles/colors";
 
 export default function Room() {
-  console.log("Rendering Home");
-
   const { roomID } = useLocalSearchParams();
 
   const [roomData, setRoomData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(true);
 
-  // const [descriptionIsCollapsed, setDescriptionIsCollapsed] = useState(true);
-
   useEffect(() => {
     setError(null);
     async function retrieveRoomData() {
-      console.log("Retrieving rooms data...");
       const URL =
         "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms/" +
         roomID;
