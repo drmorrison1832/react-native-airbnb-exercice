@@ -11,7 +11,6 @@ export default function LongTextInput({
   errorFields,
   setErrorFields,
   currentRef,
-  refIndex,
   style,
 }) {
   return (
@@ -30,7 +29,6 @@ export default function LongTextInput({
           if (errorFields.indexOf(name) !== -1) {
             let newErrorFields = [...errorFields];
             newErrorFields.splice(errorFields.indexOf(name), 1);
-            // console.log(newErrorFields);
             setErrorFields(newErrorFields);
           }
         }}

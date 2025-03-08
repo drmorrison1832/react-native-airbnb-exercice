@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { Text, Pressable } from "react-native";
 import { useState } from "react";
 import styles from "../assets/styles/styles";
 import colors from "../assets/styles/colors";

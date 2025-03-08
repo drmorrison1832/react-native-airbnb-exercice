@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Icon from "./Icons";
 import colors from "../assets/styles/colors";
@@ -12,7 +12,6 @@ export default function RoomMap({
   return (
     <View style={{ height: "500" }}>
       <MapView
-        // La MapView doit obligatoirement avoir des dimensions
         style={{ flexGrow: 1 }}
         initialRegion={{
           latitude: latitude,
@@ -27,9 +26,6 @@ export default function RoomMap({
             latitude: latitude,
             longitude: longitude,
           }}
-
-          // title={marker.title}
-          // description={marker.description}
         >
           <View
             style={{

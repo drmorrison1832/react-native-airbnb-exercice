@@ -5,8 +5,6 @@ import styles from "../assets/styles/styles";
 import colors from "../assets/styles/colors";
 
 export default function RoomPicturesSwiper({ data, height, price }) {
-  // console.log("data:", data);
-
   return (
     <View style={{ height: height, position: "relative" }}>
       <View style={styles.containers.priceContainer}>

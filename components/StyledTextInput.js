@@ -1,4 +1,4 @@
-import { TextInput, View } from "react-native";
+import { TextInput } from "react-native";
 import styles from "../assets/styles/styles";
 
 export default function StyledTextInput({
@@ -11,10 +11,6 @@ export default function StyledTextInput({
     <TextInput
       style={[styles.inputs.default, styles.debugging.redBorder]}
       placeHolder={placeHolder}
-      //   onChangeText={(text) => {
-      // setEmail(setValue);
-      //   }}
-      // value={value}
     />
   );
 }
