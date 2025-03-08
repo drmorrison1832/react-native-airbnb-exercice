@@ -1,7 +1,7 @@
 import { View, Text, ImageBackground } from "react-native";
 
 import Swiper from "react-native-swiper";
-import styles from "../assets/styles/styles";
+import styles from "../assets/styles/index";
 import colors from "../assets/styles/colors";
 
 export default function RoomPicturesSwiper({ data, height, price }) {

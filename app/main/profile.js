@@ -7,7 +7,7 @@ import { useFocusEffect } from "expo-router";
 
 import axios from "axios";
 
-import styles from "../../assets/styles/styles";
+import styles from "../../assets/styles/index";
 
 import {
   ShortTextInput,

@@ -7,7 +7,7 @@ import axios from "axios";
 
 import { ShowRoom } from "../../../components/Index";
 
-import styles from "../../../assets/styles/styles";
+import styles from "../../../assets/styles/index";
 
 export default function Room() {
   const { roomID } = useLocalSearchParams();

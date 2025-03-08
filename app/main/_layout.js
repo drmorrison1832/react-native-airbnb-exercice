@@ -11,8 +11,8 @@ export default function MainLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: colors.mainRed,
-        headerShown: true,
         headerTintColor: colors.mainRed,
+
         headerLeft: () => {
           return currentScreen === "/main/room" ||
             currentScreen === "/main/room-from-map" ? (
@@ -26,6 +26,7 @@ export default function MainLayout() {
             </Pressable>
           ) : null;
         },
+
         headerTitle: (props) => {
           return <Icons.Airbnb size="headerTitle" color={props.tintColor} />;
         },

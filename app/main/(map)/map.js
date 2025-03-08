@@ -6,7 +6,7 @@ import * as Location from "expo-location";
 
 import axios from "axios";
 
-import styles from "../../../assets/styles/styles";
+import styles from "../../../assets/styles/index";
 
 import { Icons, MapMarker } from "../../../components/Index";
 

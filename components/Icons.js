@@ -8,22 +8,13 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import { View } from "react-native";
 
-export default {
-  Airbnb,
-  Back,
-  CaretUp,
-  CaretDown,
-  CaretLeft,
-  Images,
-  MapMarker,
-  MyLocation,
-  StarRateFull,
-  StarRateHalf,
-  StarRateEmpty,
-  TakePhoto,
-  Trash,
-  User,
-};
+function IconComponent({ Library, name, containerStyle, size, color }) {
+  return (
+    <View style={containerStyle}>
+      <Library name={name} size={sizeIndex(size)} color={color} />
+    </View>
+  );
+}
 
 function sizeIndex(size) {
   switch (size) {
@@ -50,166 +41,51 @@ function sizeIndex(size) {
   }
 }
 
-function Airbnb(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <FontAwesome5
-        name="airbnb"
-        size={sizeIndex(props?.size)}
-        color={props.color}
-      />
-    </View>
-  );
-}
-
-function Back(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <AntDesign
-        name="back"
-        size={sizeIndex(props?.size)}
-        color={props.color}
-      />
-    </View>
-  );
-}
-
-function CaretDown(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <AntDesign
-        name="caretdown"
-        size={sizeIndex(props?.size)}
-        color={props.color}
-      />
-    </View>
-  );
-}
-
-function CaretLeft(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <AntDesign
-        name="caretleft"
-        size={sizeIndex(props?.size)}
-        color={props.color}
-      />
-    </View>
-  );
-}
-
-function CaretUp(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <AntDesign
-        name="caretup"
-        size={sizeIndex(props?.size)}
-        color={props.color}
-      />
-    </View>
-  );
-}
-
-function Images(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <Entypo name="images" size={sizeIndex(props?.size)} color={props.color} />
-    </View>
-  );
-}
-
-function MapMarker(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <FontAwesome
-        name="map-marker"
-        size={sizeIndex(props?.size)}
-        color={props.color}
-      />
-    </View>
-  );
-}
-
-function MyLocation(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <MaterialIcons
-        name="my-location"
-        size={sizeIndex(props?.size)}
-        color={props.color}
-      />
-    </View>
-  );
-}
-
-function StarRateFull(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <MaterialIcons
-        name="star"
-        size={sizeIndex(props?.size)}
-        color={props.color}
-      />
-    </View>
-  );
-}
-
-function StarRateHalf(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <MaterialIcons
-        name="star-half"
-        size={sizeIndex(props?.size)}
-        color={props.color}
-      />
-    </View>
-  );
-}
-
-function StarRateEmpty(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <MaterialIcons
-        name="star-border"
-        size={sizeIndex(props?.size)}
-        color={props.color}
-      />
-    </View>
-  );
-}
-
-function TakePhoto(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <MaterialCommunityIcons
-        name="camera-plus"
-        size={sizeIndex(props?.size)}
-        color={props.color}
-      />
-    </View>
-  );
-}
-
-function Trash(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <FontAwesome5
-        name="trash"
-        size={sizeIndex(props?.size)}
-        color={props.color}
-      />
-    </View>
-  );
-}
-
-function User(props) {
-  return (
-    <View style={props?.containerStyle}>
-      <FontAwesome
-        name="user"
-        size={sizeIndex(props?.size)}
-        color={props.color}
-      />
-    </View>
-  );
-}
+export default {
+  Airbnb: (props) => (
+    <IconComponent Library={FontAwesome5} name="airbnb" {...props} />
+  ),
+  Back: (props) => (
+    <IconComponent Library={FontAwesome5} name="trash" {...props} />
+  ),
+  CaretUp: (props) => (
+    <IconComponent Library={AntDesign} name="caretup" {...props} />
+  ),
+  CaretDown: (props) => (
+    <IconComponent Library={AntDesign} name="caretdown" {...props} />
+  ),
+  CaretLeft: (props) => (
+    <IconComponent Library={AntDesign} name="caretleft" {...props} />
+  ),
+  Images: (props) => (
+    <IconComponent Library={Entypo} name="images" {...props} />
+  ),
+  MapMarker: (props) => (
+    <IconComponent Library={FontAwesome} name="map-marker" {...props} />
+  ),
+  MyLocation: (props) => (
+    <IconComponent Library={MaterialIcons} name="my-location" {...props} />
+  ),
+  StarRateFull: (props) => (
+    <IconComponent Library={MaterialIcons} name="star" {...props} />
+  ),
+  StarRateHalf: (props) => (
+    <IconComponent Library={MaterialIcons} name="star-half" {...props} />
+  ),
+  StarRateEmpty: (props) => (
+    <IconComponent Library={MaterialIcons} name="star-border" {...props} />
+  ),
+  TakePhoto: (props) => (
+    <IconComponent
+      Library={MaterialCommunityIcons}
+      name="camera-plus"
+      {...props}
+    />
+  ),
+  Trash: (props) => (
+    <IconComponent Library={FontAwesome5} name="trash" {...props} />
+  ),
+  User: (props) => (
+    <IconComponent Library={FontAwesome} name="user" {...props} />
+  ),
+};

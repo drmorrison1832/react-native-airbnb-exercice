@@ -2,7 +2,7 @@ import { View, Text, Image } from "react-native";
 
 import Rating from "./Rating";
 
-import styles from "../assets/styles/styles";
+import styles from "../assets/styles/index";
 
 export default function RoomHeader({ title, ratingValue, reviews, photoURI }) {
   return (

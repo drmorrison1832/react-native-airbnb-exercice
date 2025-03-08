@@ -1,7 +1,7 @@
 import { TextInput, Text, View } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
 
-import styles from "../assets/styles/styles";
+import styles from "../assets/styles/index";
 import { useState } from "react";
 
 export default function ShortTextInput({

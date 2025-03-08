@@ -1,6 +1,6 @@
 import { View, ActivityIndicator } from "react-native";
 
-import styles from "../assets/styles/styles";
+import styles from "../assets/styles/index";
 
 export default function Index() {
   return (
