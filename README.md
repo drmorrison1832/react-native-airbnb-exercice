@@ -4,7 +4,7 @@ This is my first project on React Native—and my last project during the React/
 It's a simple airbnb mocking interface that uses the schools' own airbnb-like API.
 Although it's essentially a training exercice, with limited features (for instance: the user can't publish any room), I aimed to make it as smooth and user-friendly as possible.
 
-![Airbnb React Native Exercice screenshot #01](https://res.cloudinary.com/dig08y2ym/image/upload/v1741453578/airbnb-exercice-screenshot-01_mizvun.jpg | width=300)
+![Airbnb React Native Exercice screenshot #01](https://res.cloudinary.com/dig08y2ym/image/upload/v1741453578/airbnb-exercice-screenshot-01_mizvun.jpg)
 
 ## Modules, tools and coding strategies I tried on this project
 
