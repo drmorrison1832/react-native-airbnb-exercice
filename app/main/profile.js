@@ -1,6 +1,6 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Text, View, ActivityIndicator, Image } from "react-native";
-import { useContext, useState, useEffect, useRef, useCallback } from "react";
+import { Text, View, ActivityIndicator } from "react-native";
+import { useContext, useState, useRef, useCallback } from "react";
 import AuthContext from "../../context/AuthContext";
 import { router } from "expo-router";
 import { useFocusEffect } from "expo-router";

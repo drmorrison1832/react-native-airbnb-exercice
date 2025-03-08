@@ -165,7 +165,7 @@ export default function Login() {
 
           <NavText
             screen="../main"
-            text="Or just wander arround... "
+            text="Or just wander arround the app... "
             underline
           />
         </View>
