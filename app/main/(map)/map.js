@@ -9,6 +9,7 @@ import axios from "axios";
 import styles from "../../../assets/styles/index";
 
 import { Icons, MapMarker } from "../../../components/Index";
+import colors from "../../../assets/styles/colors";
 
 export default function ArroundMe() {
   const [sourroundingRooms, setSourroundingRooms] = useState([]);
@@ -123,7 +124,7 @@ export default function ArroundMe() {
           setLatitudeDelta(0.025);
         }}
       >
-        <Icons.MyLocation size="S" />
+        <Icons.MyLocation size="M" color={colors.darkGrey} />
       </Pressable>
     </MapView>
   );

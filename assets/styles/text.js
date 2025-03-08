@@ -24,18 +24,13 @@ export default StyleSheet.create({
   numberOfReviews: {
     fontSize: 15,
     color: colors.lightGrey2,
-    // borderColor: "red",
-    // borderWidth: 1,
   },
 
   //ROOM
 
   descriptionText: { fontSize: 16, color: colors.lightGrey1 },
   showMoreText: {
-    marginTop: 10,
     fontSize: 16,
     color: colors.darkGrey,
-    // borderWidth: 1,
-    padding: 4,
   },
 });

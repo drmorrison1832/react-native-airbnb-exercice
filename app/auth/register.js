@@ -121,7 +121,7 @@ export default function Register() {
         ]}
       >
         <View style={[styles.containers.default, { gap: 20 }]}>
-          <Icons.Airbnb size="M" color={colors.mainRed} />
+          <Icons.Airbnb size="L" color={colors.mainRed} />
           <ScreenTitle title="Register" />
         </View>
         <View style={[styles.containers.default, { marginTop: 20 }]}>

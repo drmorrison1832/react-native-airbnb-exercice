@@ -106,7 +106,7 @@ export default function Login() {
         ]}
       >
         <View style={[styles.containers.default, { gap: 20, borderWidth: 0 }]}>
-          <Icons.Airbnb size="M" color={colors.mainRed} />
+          <Icons.Airbnb size="L" color={colors.mainRed} />
           <ScreenTitle title="Login" />
         </View>
 

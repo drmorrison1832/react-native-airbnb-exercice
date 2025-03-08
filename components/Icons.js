@@ -10,7 +10,7 @@ import { View } from "react-native";
 
 function IconComponent({ Library, name, containerStyle, size, color }) {
   return (
-    <View style={containerStyle}>
+    <View style={[containerStyle]}>
       <Library name={name} size={sizeIndex(size)} color={color} />
     </View>
   );
@@ -25,10 +25,10 @@ function sizeIndex(size) {
       return 30;
     case "medium":
     case "M":
-      return 90;
+      return 42;
     case "large":
     case "L":
-      return 120;
+      return 90;
     case "headerTitle":
       return 30;
     case "tabBarIcon":
@@ -45,11 +45,14 @@ export default {
   Airbnb: (props) => (
     <IconComponent Library={FontAwesome5} name="airbnb" {...props} />
   ),
-  Back: (props) => (
-    <IconComponent Library={FontAwesome5} name="trash" {...props} />
-  ),
+  Back: (props) => <IconComponent Library={AntDesign} name="back" {...props} />,
   CaretUp: (props) => (
-    <IconComponent Library={AntDesign} name="caretup" {...props} />
+    <IconComponent
+      Library={AntDesign}
+      name="caretup"
+      containerStyle={{}}
+      {...props}
+    />
   ),
   CaretDown: (props) => (
     <IconComponent Library={AntDesign} name="caretdown" {...props} />

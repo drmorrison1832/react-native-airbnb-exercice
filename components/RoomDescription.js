@@ -1,7 +1,8 @@
-import { Text, Pressable } from "react-native";
+import { Text, View, Pressable } from "react-native";
 import { useState } from "react";
 import styles from "../assets/styles/index";
 import colors from "../assets/styles/colors";
+import { StyleSheet } from "react-native";
 
 import Icons from "./Icons";
 
@@ -20,14 +21,22 @@ export default function RoomDescription({ description }) {
       >
         {description}
       </Text>
-      <Text style={styles.text.showMoreText}>
-        Show more{" "}
+      <View style={[styles.containers.inLineDefault]}>
+        <Text style={[styles.text.showMoreText]}>Show more </Text>
         {descriptionIsCollapsed ? (
-          <Icons.CaretDown size={17} color={colors.darkGrey} />
+          <Icons.CaretDown
+            size={"XS"}
+            color={colors.darkGrey}
+            containerStyle={[{ justifyContent: "flex-end", paddingBottom: 3 }]}
+          />
         ) : (
-          <Icons.CaretUp size={17} color={colors.darkGrey} />
+          <Icons.CaretUp
+            size={"XS"}
+            color={colors.darkGrey}
+            containerStyle={[{ justifyContent: "flex-end" }]}
+          />
         )}
-      </Text>
+      </View>
     </Pressable>
   );
 }
