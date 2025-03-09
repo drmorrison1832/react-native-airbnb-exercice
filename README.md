@@ -6,7 +6,7 @@ Although it's essentially a training exercice, with limited features (for instan
 
 ![Airbnb React Native Exercice screenshot #01](https://res.cloudinary.com/dig08y2ym/image/upload/v1741454986/airbnb-exercice-screenshot-01_qqsnms.jpg)
 
-## Modules, tools and coding strategies I tried on this project
+## Modules, tools and coding strategies
 
 The project was built using Expo over Yarn, and tested directly on my iPhone 15 Pro Max.
 I tried as much as possible to keep files small, by factorizing components.
