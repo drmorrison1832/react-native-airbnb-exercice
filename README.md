@@ -1,16 +1,16 @@
 # Airbnb mocking mobile app (iOS)
 
-This is my first project on React Native and the last project I made during the Bootcamp I followed at Le Reacter (https://www.lereacteur.io/).
-It's a simple airbnb mocking interface using Le Reacteur's own airbnb-like API.
-Although it's essentially a training exercice, with limited features, it could implement most of the stuff I learned by the time.
-I cared to make the app as smooth and ergonomic as possible.
+This is my first project on React Native and the last project I made at the Bootcamp I followed at ![Le Reacter](https://www.lereacteur.io/).
+This tiny iOS app is a simple Airbnb mocking interface using Le Reacteur's own airbnb-like API.
+Although it's essentially a training exercice, with limited features, I allowed me to try most of the stuff I've learned by the time.
+I specially cared to making the app as smooth and ergonomic as possible.
 
 ![Airbnb React Native Exercice screenshot #01](https://res.cloudinary.com/dig08y2ym/image/upload/v1741454986/airbnb-exercice-screenshot-01_qqsnms.jpg)
 
-## Try app
+## Running the app
 
-You need a dev steup able to run React Native apps for iOS.
-I used a Mac, with the following apps/modules intalled:
+You need a dev setup, able to run iOS React Native apps.
+I worked on a Mac where I installed the following apps/modules:
 
 - ![Xcode](https://apps.apple.com/fr/app/xcode/id497799835)
 - ![watchman](https://formulae.brew.sh/formula/watchman)
@@ -19,20 +19,19 @@ I used a Mac, with the following apps/modules intalled:
 
 ## Modules, tools and coding strategies I applied to this project
 
-The project was built using Expo over Yarn, and tested directly on my iPhone 15 Pro Max.
+The project was built using Expo running over Yarn, and tested directly on my iPhone 15 Pro Max over my wifi router.
 
-For the sake of scalability I kept JS screen files pretty small, by creating reusable components (`components` folder).
+For the sake of scalability, I kept JS screen files as small as possible, by creating reusable components (`components` folder).
+I also used several stylesheet files (`/assets/styles`), although I think I should've included the stylesheets right in the JS files.
 
-For the sake of scalability I created several stylesheet files (`/assets/styles`). Although if I were to start over, I would rather include the stylesheets in the JS files.
+Both components and stylesheets have their own `index` file, which allowed me make importing simplier.
 
-Both components and styles have their own `index` file, which allows a simplier importing.
+Icons are also centralized in a unique `Icons` component.
 
-Icons are also centralized in a unique `Icons` component, with sevreral exports.
-
-As I said a bove, I implemented most of what I learned about React Native so far:
+As I said a bove, I implemented here most of what I learned about React Native so far:
 
 - Vite + Expo Router
-- Hooks:
+- Hooks
   - useState
   - useEffect
   - useContext
